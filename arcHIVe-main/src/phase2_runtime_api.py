@@ -81,7 +81,11 @@ def init_auth_db() -> None:
     AUTH_DB.parent.mkdir(exist_ok=True)
     with sqlite3.connect(AUTH_DB) as connection:
         connection.execute("CREATE TABLE IF NOT EXISTS admin_users (username TEXT PRIMARY KEY, password_hash TEXT NOT NULL, created_at TEXT DEFAULT CURRENT_TIMESTAMP, active INTEGER NOT NULL DEFAULT 1)")
-        connection.execute("INSERT OR IGNORE INTO admin_users (username, password_hash) VALUES (?, ?)", (username, password_hash(password)))
+        connection.execute(
+            "INSERT INTO admin_users (username, password_hash, active) VALUES (?, ?, 1) "
+            "ON CONFLICT(username) DO UPDATE SET password_hash=excluded.password_hash, active=1",
+            (username, password_hash(password)),
+        )
 
 def validate_production_env() -> None:
     if not os.getenv("RENDER"):
