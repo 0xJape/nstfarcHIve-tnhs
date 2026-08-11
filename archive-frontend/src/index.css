@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+:root { font-family:Poppins,ui-sans-serif,system-ui,sans-serif; color:#1a1a1a; background:#f7f7f7; font-synthesis:none; text-rendering:optimizeLegibility; }
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { margin:0; min-width:320px; min-height:100vh; }
+button,input,select { font:inherit; }
+button { cursor:pointer; }
+button:focus-visible,a:focus-visible { outline:3px solid #ef233c; outline-offset:3px; }
+::selection { color:#fff; background:#a50f15; }

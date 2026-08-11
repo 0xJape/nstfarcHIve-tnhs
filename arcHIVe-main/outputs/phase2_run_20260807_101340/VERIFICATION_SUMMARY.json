@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "municipalities": 49,
+  "forecast_rows": 15288,
+  "forecast_months": 312,
+  "decomposition_rows": 31164,
+  "recommendation_rows": 49,
+  "alert_rows": 3411,
+  "max_regional_reconciliation_error": 1.4210854715202004e-14,
+  "boundary_residual_gap_ratio": 0.0,
+  "boundary_residual_overlap_ratio": 0.0,
+  "regional_rows": 312,
+  "new_testing_centers_opened": 40,
+  "maximum_compartment_balance_error": 0.0,
+  "maximum_monthly_population_change": 0.001824368289033318,
+  "minimum_testing_access_score": 0.0,
+  "maximum_testing_access_score": 0.9912735307813909,
+  "final_regional_art_coverage": 0.9735137900093633,
+  "final_regional_viral_suppression_coverage": 0.9351288391874883
+}

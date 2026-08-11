@@ -1,0 +1,10 @@
+arcHIVe Phase 2 completed successfully.
+Run: phase2_run_20260807_101340
+Forecast period: 2025-01 to 2050-12
+Municipalities: 49
+Forecast rows: 15288
+Phase 1 Hybrid chronological test R-squared: 0.928523
+New testing centers opened in scenario: 40
+Final mean ART coverage: 97.351%
+Final mean viral suppression coverage: 93.513%
+Scientific scope: municipality-time training targets are constrained development simulations.

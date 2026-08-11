@@ -1,0 +1,966 @@
+<!doctype html><html><head><meta charset="utf-8"><title>arcHIVe Training Report</title><style>
+body{font:12pt Arial,sans-serif;max-width:1240px;margin:28px auto;padding:0 22px;color:#172033}h1,h2{color:#102a43}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.metric{border:1px solid #cbd5e1;padding:11px;border-radius:8px}figure{margin:22px 0}img{max-width:100%;border:1px solid #cbd5e1}table.data{border-collapse:collapse;width:100%;font-size:9pt;display:block;overflow:auto}table.data th,table.data td{border:1px solid #cbd5e1;padding:5px;text-align:right;white-space:nowrap}table.data th:first-child,table.data td:first-child{text-align:left}code{background:#eef2f6;padding:2px 4px}</style></head><body>
+<h1>arcHIVe Training Report</h1>
+<h2>Run summary</h2><div class="metrics"><div class="metric"><b>Municipalities</b><br>49</div><div class="metric"><b>Forecast months</b><br>312</div><div class="metric"><b>Phase 1 Hybrid test R²</b><br>0.928523</div><div class="metric"><b>Boundary source</b><br>GeoRiskPH PSA Municipal ArcGIS</div></div>
+<p><b>Forecast period:</b> 2025-01 through 2050-12<br><b>Simulation:</b> monthly population growth + undiagnosed/diagnosed/ART/suppressed compartments + dynamic centers + spatial neighbor force<br><b>Boundary topology:</b> residual gap ratio 0.000e+00; residual overlap ratio 0.000e+00<br><b>Hybrid:</b> MLR 85.00%, LSTM 15.00%; spatial diffusion 10.00%</p>
+<p><a href="maps/arcHIVe_Region_XII_Interactive_Forecast_Map.html">Open the interactive Region XII map</a></p>
+<h2>Testing-center planning priorities</h2><table class="dataframe data">
+  <thead>
+    <tr style="text-align: right;">
+      <th>PLANNING_PERIOD</th>
+      <th>PSGC</th>
+      <th>PROVINCE</th>
+      <th>LOCATION</th>
+      <th>POPULATION</th>
+      <th>CURRENT_ESTIMATED_TESTING_CENTERS</th>
+      <th>POPULATION_PER_CENTER</th>
+      <th>MEAN_FORECAST_PRESSURE</th>
+      <th>MAX_FORECAST_PRESSURE</th>
+      <th>HOTSPOT_MONTHS</th>
+      <th>ALERT_MONTHS</th>
+      <th>TESTING_CENTER_NEED_SCORE</th>
+      <th>PRIORITY_LEVEL</th>
+      <th>RECOMMENDED_ADDITIONAL_CENTERS</th>
+      <th>CANDIDATE_LATITUDE</th>
+      <th>CANDIDATE_LONGITUDE</th>
+      <th>CANDIDATE_METHOD</th>
+      <th>RECOMMENDATION_STATUS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2030-12</td>
+      <td>1204701000</td>
+      <td>Cotabato</td>
+      <td>ALAMADA</td>
+      <td>75399.181</td>
+      <td>0.000</td>
+      <td>150798.362</td>
+      <td>45.397</td>
+      <td>93.456</td>
+      <td>29</td>
+      <td>231</td>
+      <td>59.718</td>
+      <td>MODERATE</td>
+      <td>1</td>
+      <td>7.486</td>
+      <td>124.584</td>
+      <td>Municipality representative point; exact site requires accessibility, land, privacy, staffing, and DOH validation</td>
+      <td>SCENARIO PLANNING CANDIDATE - NOT AN APPROVED FACILITY SITE</td>
+    </tr>
+    <tr>
+      <td>2030-12</td>
+      <td>1206509000</td>
+      <td>Sultan Kudarat</td>
+      <td>PALIMBANG</td>
+      <td>88635.298</td>
+      <td>0.000</td>
+      <td>177270.596</td>
+      <td>40.698</td>
+      <td>88.245</td>
+      <td>12</td>
+      <td>120</td>
+      <td>59.084</td>
+      <td>MODERATE</td>
+      <td>1</td>
+      <td>6.273</td>
+      <td>124.287</td>
+      <td>Municipality representative point; exact site requires accessibility, land, privacy, staffing, and DOH validation</td>
+      <td>SCENARIO PLANNING CANDIDATE - NOT AN APPROVED FACILITY SITE</td>
+    </tr>
+    <tr>
+      <td>2030-12</td>
+      <td>1204702000</td>
+      <td>Cotabato</td>
+      <td>CARMEN</td>
+      <td>83960.323</td>
+      <td>0.000</td>
+      <td>167920.647</td>
+      <td>35.979</td>
+      <td>77.424</td>
+      <td>21</td>
+      <td>59</td>
+      <td>56.324</td>
+      <td>MODERATE</td>
+      <td>1</td>
+      <td>7.320</td>
+      <td>124.743</td>
+      <td>Municipality representative point; exact site requires accessibility, land, privacy, staffing, and DOH validation</td>
+      <td>SCENARIO PLANNING CANDIDATE - NOT AN APPROVED FACILITY SITE</td>
+    </tr>
+    <tr>
+      <td>2030-12</td>
+      <td>1204712000</td>
+      <td>Cotabato</td>
+      <td>PIKIT</td>
+      <td>70940.505</td>
+      <td>0.000</td>
+      <td>141881.009</td>
+      <td>44.221</td>
+      <td>86.154</td>
+      <td>15</td>
+      <td>211</td>
+      <td>55.760</td>
+      <td>MODERATE</td>
+      <td>1</td>
+      <td>7.076</td>
+      <td>124.634</td>
+      <td>Municipality representative point; exact site requires accessibility, land, privacy, staffing, and DOH validation</td>
+      <td>SCENARIO PLANNING CANDIDATE - NOT AN APPROVED FACILITY SITE</td>
+    </tr>
+    <tr>
+      <td>2030-12</td>
+      <td>1204713000</td>
+      <td>Cotabato</td>
+      <td>PRESIDENT ROXAS</td>
+      <td>53923.153</td>
+      <td>0.000</td>
+      <td>107846.307</td>
+      <td>39.165</td>
+      <td>72.405</td>
+      <td>0</td>
+      <td>6</td>
+      <td>54.971</td>
+      <td>MODERATE</td>
+      <td>1</td>
+      <td>7.372</td>
+      <td>124.982</td>
+      <td>Municipality representative point; exact site requires accessibility, land, privacy, staffing, and DOH validation</td>
+      <td>SCENARIO PLANNING CANDIDATE - NOT AN APPROVED FACILITY SITE</td>
+    </tr>
+    <tr>
+      <td>2030-12</td>
+      <td>1204711000</td>
+      <td>Cotabato</td>
+      <td>PIGKAWAYAN</td>
+      <td>56714.452</td>
+      <td>0.000</td>
+      <td>113428.905</td>
+      <td>52.551</td>
+      <td>95.381</td>
+      <td>27</td>
+      <td>132</td>
+      <td>54.908</td>
+      <td>MODERATE</td>
+      <td>1</td>
+      <td>7.302</td>
+      <td>124.434</td>
+      <td>Municipality representative point; exact site requires accessibility, land, privacy, staffing, and DOH validation</td>
+      <td>SCENARIO PLANNING CANDIDATE - NOT AN APPROVED FACILITY SITE</td>
+    </tr>
+    <tr>
+      <td>2030-12</td>
+      <td>1204717000</td>
+      <td>Cotabato</td>
+      <td>ALEOSAN</td>
+      <td>40204.994</td>
+      <td>0.000</td>
+      <td>80409.987</td>
+      <td>51.979</td>
+      <td>90.800</td>
+      <td>19</td>
+      <td>64</td>
+      <td>54.362</td>
+      <td>MODERATE</td>
+      <td>1</td>
+      <td>7.187</td>
+      <td>124.634</td>
+      <td>Municipality representative point; exact site requires accessibility, land, privacy, staffing, and DOH validation</td>
+      <td>SCENARIO PLANNING CANDIDATE - NOT AN APPROVED FACILITY SITE</td>
+    </tr>
+    <tr>
+      <td>2030-12</td>
+      <td>1206505000</td>
+      <td>Sultan Kudarat</td>
+      <td>KALAMANSIG</td>
+      <td>54964.730</td>
+      <td>0.000</td>
+      <td>109929.459</td>
+      <td>36.507</td>
+      <td>72.557</td>
+      <td>0</td>
+      <td>14</td>
+      <td>53.376</td>
+      <td>MODERATE</td>
+      <td>1</td>
+      <td>6.513</td>
+      <td>124.157</td>
+      <td>Municipality representative point; exact site requires accessibility, land, privacy, staffing, and DOH validation</td>
+      <td>SCENARIO PLANNING CANDIDATE - NOT AN APPROVED FACILITY SITE</td>
+    </tr>
+    <tr>
+      <td>2030-12</td>
+      <td>1204706000</td>
+      <td>Cotabato</td>
+      <td>MAGPET</td>
+      <td>58143.178</td>
+      <td>0.000</td>
+      <td>116286.356</td>
+      <td>42.850</td>
+      <td>69.255</td>
+      <td>0</td>
+      <td>47</td>
+      <td>51.347</td>
+      <td>MODERATE</td>
+      <td>1</td>
+      <td>7.140</td>
+      <td>125.175</td>
+      <td>Municipality representative point; exact site requires accessibility, land, privacy, staffing, and DOH validation</td>
+      <td>SCENARIO PLANNING CANDIDATE - NOT AN APPROVED FACILITY SITE</td>
+    </tr>
+    <tr>
+      <td>2030-12</td>
+      <td>1204716000</td>
+      <td>Cotabato</td>
+      <td>BANISILAN</td>
+      <td>50493.151</td>
+      <td>0.000</td>
+      <td>100986.303</td>
+      <td>34.287</td>
+      <td>88.040</td>
+      <td>24</td>
+      <td>66</td>
+      <td>50.363</td>
+      <td>MODERATE</td>
+      <td>1</td>
+      <td>7.468</td>
+      <td>124.727</td>
+      <td>Municipality representative point; exact site requires accessibility, land, privacy, staffing, and DOH validation</td>
+      <td>SCENARIO PLANNING CANDIDATE - NOT AN APPROVED FACILITY SITE</td>
+    </tr>
+    <tr>
+      <td>2030-12</td>
+      <td>1208005000</td>
+      <td>Sarangani</td>
+      <td>MAITUM</td>
+      <td>48722.580</td>
+      <td>0.000</td>
+      <td>97445.159</td>
+      <td>43.251</td>
+      <td>90.107</td>
+      <td>9</td>
+      <td>38</td>
+      <td>50.270</td>
+      <td>MODERATE</td>
+      <td>1</td>
+      <td>6.115</td>
+      <td>124.479</td>
+      <td>Municipality representative point; exact site requires accessibility, land, privacy, staffing, and DOH validation</td>
+      <td>SCENARIO PLANNING CANDIDATE - NOT AN APPROVED FACILITY SITE</td>
+    </tr>
+    <tr>
+      <td>2030-12</td>
+      <td>1208006000</td>
+      <td>Sarangani</td>
+      <td>MALAPATAN</td>
+      <td>87372.584</td>
+      <td>0.000</td>
+      <td>174745.167</td>
+      <td>26.953</td>
+      <td>60.087</td>
+      <td>0</td>
+      <td>0</td>
+      <td>50.103</td>
+      <td>MODERATE</td>
+      <td>1</td>
+      <td>6.019</td>
+      <td>125.399</td>
+      <td>Municipality representative point; exact site requires accessibility, land, privacy, staffing, and DOH validation</td>
+      <td>SCENARIO PLANNING CANDIDATE - NOT AN APPROVED FACILITY SITE</td>
+    </tr>
+    <tr>
+      <td>2030-12</td>
+      <td>1206511000</td>
+      <td>Sultan Kudarat</td>
+      <td>TACURONG</td>
+      <td>129398.642</td>
+      <td>3.000</td>
+      <td>43132.881</td>
+      <td>64.814</td>
+      <td>86.722</td>
+      <td>266</td>
+      <td>261</td>
+      <td>47.724</td>
+      <td>MODERATE</td>
+      <td>1</td>
+      <td>6.664</td>
+      <td>124.675</td>
+      <td>Municipality representative point; exact site requires accessibility, land, privacy, staffing, and DOH validation</td>
+      <td>SCENARIO PLANNING CANDIDATE - NOT AN APPROVED FACILITY SITE</td>
+    </tr>
+    <tr>
+      <td>2030-12</td>
+      <td>1206306000</td>
+      <td>South Cotabato</td>
+      <td>KORONADAL</td>
+      <td>224518.489</td>
+      <td>4.000</td>
+      <td>56129.622</td>
+      <td>66.428</td>
+      <td>86.623</td>
+      <td>247</td>
+      <td>247</td>
+      <td>47.018</td>
+      <td>MODERATE</td>
+      <td>1</td>
+      <td>6.457</td>
+      <td>124.872</td>
+      <td>Municipality representative point; exact site requires accessibility, land, privacy, staffing, and DOH validation</td>
+      <td>SCENARIO PLANNING CANDIDATE - NOT AN APPROVED FACILITY SITE</td>
+    </tr>
+    <tr>
+      <td>2030-12</td>
+      <td>1206512000</td>
+      <td>Sultan Kudarat</td>
+      <td>SEN. NINOY AQUINO</td>
+      <td>50450.124</td>
+      <td>0.000</td>
+      <td>100900.248</td>
+      <td>28.984</td>
+      <td>55.874</td>
+      <td>0</td>
+      <td>0</td>
+      <td>45.456</td>
+      <td>MODERATE</td>
+      <td>1</td>
+      <td>6.433</td>
+      <td>124.347</td>
+      <td>Municipality representative point; exact site requires accessibility, land, privacy, staffing, and DOH validation</td>
+      <td>SCENARIO PLANNING CANDIDATE - NOT AN APPROVED FACILITY SITE</td>
+    </tr>
+    <tr>
+      <td>2030-12</td>
+      <td>1204718000</td>
+      <td>Cotabato</td>
+      <td>ARAKAN</td>
+      <td>54228.924</td>
+      <td>0.000</td>
+      <td>108457.847</td>
+      <td>40.512</td>
+      <td>72.729</td>
+      <td>0</td>
+      <td>67</td>
+      <td>45.085</td>
+      <td>MODERATE</td>
+      <td>1</td>
+      <td>7.342</td>
+      <td>125.151</td>
+      <td>Municipality representative point; exact site requires accessibility, land, privacy, staffing, and DOH validation</td>
+      <td>SCENARIO PLANNING CANDIDATE - NOT AN APPROVED FACILITY SITE</td>
+    </tr>
+    <tr>
+      <td>2030-12</td>
+      <td>1206311000</td>
+      <td>South Cotabato</td>
+      <td>NORALA</td>
+      <td>52148.502</td>
+      <td>2.000</td>
+      <td>26074.251</td>
+      <td>67.074</td>
+      <td>96.567</td>
+      <td>274</td>
+      <td>272</td>
+      <td>43.233</td>
+      <td>LOW</td>
+      <td>1</td>
+      <td>6.536</td>
+      <td>124.675</td>
+      <td>Municipality representative point; exact site requires accessibility, land, privacy, staffing, and DOH validation</td>
+      <td>SCENARIO PLANNING CANDIDATE - NOT AN APPROVED FACILITY SITE</td>
+    </tr>
+    <tr>
+      <td>2030-12</td>
+      <td>1206318000</td>
+      <td>South Cotabato</td>
+      <td>SANTO NIÑO</td>
+      <td>44035.021</td>
+      <td>1.000</td>
+      <td>44035.021</td>
+      <td>62.569</td>
+      <td>91.618</td>
+      <td>252</td>
+      <td>251</td>
+      <td>41.900</td>
+      <td>LOW</td>
+      <td>1</td>
+      <td>6.453</td>
+      <td>124.667</td>
+      <td>Municipality representative point; exact site requires accessibility, land, privacy, staffing, and DOH validation</td>
+      <td>SCENARIO PLANNING CANDIDATE - NOT AN APPROVED FACILITY SITE</td>
+    </tr>
+    <tr>
+      <td>2030-12</td>
+      <td>1206315000</td>
+      <td>South Cotabato</td>
+      <td>TANTANGAN</td>
+      <td>52196.230</td>
+      <td>2.000</td>
+      <td>26098.115</td>
+      <td>66.384</td>
+      <td>97.508</td>
+      <td>272</td>
+      <td>271</td>
+      <td>40.653</td>
+      <td>LOW</td>
+      <td>1</td>
+      <td>6.579</td>
+      <td>124.753</td>
+      <td>Municipality representative point; exact site requires accessibility, land, privacy, staffing, and DOH validation</td>
+      <td>SCENARIO PLANNING CANDIDATE - NOT AN APPROVED FACILITY SITE</td>
+    </tr>
+    <tr>
+      <td>2030-12</td>
+      <td>1206317000</td>
+      <td>South Cotabato</td>
+      <td>TUPI</td>
+      <td>84408.928</td>
+      <td>2.000</td>
+      <td>42204.464</td>
+      <td>47.741</td>
+      <td>87.516</td>
+      <td>229</td>
+      <td>98</td>
+      <td>37.836</td>
+      <td>LOW</td>
+      <td>1</td>
+      <td>6.349</td>
+      <td>124.969</td>
+      <td>Municipality representative point; exact site requires accessibility, land, privacy, staffing, and DOH validation</td>
+      <td>SCENARIO PLANNING CANDIDATE - NOT AN APPROVED FACILITY SITE</td>
+    </tr>
+  </tbody>
+</table><h2>Highest-priority alerts</h2><table class="dataframe data">
+  <thead>
+    <tr style="text-align: right;">
+      <th>PERIOD</th>
+      <th>PSGC</th>
+      <th>PROVINCE</th>
+      <th>LOCATION</th>
+      <th>PREDICTED_CASES</th>
+      <th>ROLLING_12M_RATE_PER_100K</th>
+      <th>HOTSPOT_CLASS</th>
+      <th>HOTSPOT_CLUSTER_ID</th>
+      <th>HOTSPOT_CLUSTER_SIZE</th>
+      <th>TRANSMISSION_PRESSURE_INDEX</th>
+      <th>TRANSMISSION_PRESSURE_LEVEL</th>
+      <th>TESTING_CENTER_NEED_SCORE</th>
+      <th>ALERT_REASON</th>
+      <th>ALERT_TYPE</th>
+      <th>ALERT_STATUS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2025-01</td>
+      <td>1206311000</td>
+      <td>South Cotabato</td>
+      <td>NORALA</td>
+      <td>0.250</td>
+      <td>16.888</td>
+      <td>HOT_SPOT_99</td>
+      <td>1</td>
+      <td>11</td>
+      <td>89.998</td>
+      <td>CRITICAL</td>
+      <td>76.204</td>
+      <td>TRANSMISSION_PRESSURE_PROXY+STATISTICAL_HOTSPOT+CONNECTED_HOTSPOT_CLUSTER+TESTING_CENTER_GAP+NEIGHBOR_INFECTIOUS_PRESSURE</td>
+      <td>DYNAMIC SPATIOTEMPORAL WATCH</td>
+      <td>SCENARIO-BASED; VERIFY WITH OFFICIAL SURVEILLANCE</td>
+    </tr>
+    <tr>
+      <td>2025-01</td>
+      <td>1206315000</td>
+      <td>South Cotabato</td>
+      <td>TANTANGAN</td>
+      <td>0.285</td>
+      <td>14.891</td>
+      <td>HOT_SPOT_95</td>
+      <td>1</td>
+      <td>11</td>
+      <td>84.089</td>
+      <td>CRITICAL</td>
+      <td>71.474</td>
+      <td>TRANSMISSION_PRESSURE_PROXY+STATISTICAL_HOTSPOT+CONNECTED_HOTSPOT_CLUSTER+TESTING_CENTER_GAP+NEIGHBOR_INFECTIOUS_PRESSURE</td>
+      <td>DYNAMIC SPATIOTEMPORAL WATCH</td>
+      <td>SCENARIO-BASED; VERIFY WITH OFFICIAL SURVEILLANCE</td>
+    </tr>
+    <tr>
+      <td>2025-01</td>
+      <td>1206318000</td>
+      <td>South Cotabato</td>
+      <td>SANTO NIÑO</td>
+      <td>0.240</td>
+      <td>19.941</td>
+      <td>HOT_SPOT_95</td>
+      <td>1</td>
+      <td>11</td>
+      <td>82.902</td>
+      <td>CRITICAL</td>
+      <td>70.961</td>
+      <td>TRANSMISSION_PRESSURE_PROXY+STATISTICAL_HOTSPOT+CONNECTED_HOTSPOT_CLUSTER+TESTING_CENTER_GAP+NEIGHBOR_INFECTIOUS_PRESSURE</td>
+      <td>DYNAMIC SPATIOTEMPORAL WATCH</td>
+      <td>SCENARIO-BASED; VERIFY WITH OFFICIAL SURVEILLANCE</td>
+    </tr>
+    <tr>
+      <td>2025-01</td>
+      <td>1206314000</td>
+      <td>South Cotabato</td>
+      <td>TAMPAKAN</td>
+      <td>0.235</td>
+      <td>12.289</td>
+      <td>HOT_SPOT_99</td>
+      <td>1</td>
+      <td>11</td>
+      <td>81.170</td>
+      <td>CRITICAL</td>
+      <td>74.047</td>
+      <td>TRANSMISSION_PRESSURE_PROXY+STATISTICAL_HOTSPOT+CONNECTED_HOTSPOT_CLUSTER+TESTING_CENTER_GAP+NEIGHBOR_INFECTIOUS_PRESSURE</td>
+      <td>DYNAMIC SPATIOTEMPORAL WATCH</td>
+      <td>SCENARIO-BASED; VERIFY WITH OFFICIAL SURVEILLANCE</td>
+    </tr>
+    <tr>
+      <td>2025-01</td>
+      <td>1206306000</td>
+      <td>South Cotabato</td>
+      <td>KORONADAL</td>
+      <td>2.529</td>
+      <td>33.133</td>
+      <td>HOT_SPOT_95</td>
+      <td>1</td>
+      <td>11</td>
+      <td>79.608</td>
+      <td>HIGH</td>
+      <td>69.442</td>
+      <td>TRANSMISSION_PRESSURE_PROXY+STATISTICAL_HOTSPOT+CONNECTED_HOTSPOT_CLUSTER</td>
+      <td>DYNAMIC SPATIOTEMPORAL WATCH</td>
+      <td>SCENARIO-BASED; VERIFY WITH OFFICIAL SURVEILLANCE</td>
+    </tr>
+    <tr>
+      <td>2025-01</td>
+      <td>1206511000</td>
+      <td>Sultan Kudarat</td>
+      <td>TACURONG</td>
+      <td>0.881</td>
+      <td>16.848</td>
+      <td>NOT_SIGNIFICANT</td>
+      <td>0</td>
+      <td>0</td>
+      <td>79.201</td>
+      <td>HIGH</td>
+      <td>71.077</td>
+      <td>TRANSMISSION_PRESSURE_PROXY+TESTING_CENTER_GAP+NEIGHBOR_INFECTIOUS_PRESSURE</td>
+      <td>DYNAMIC SPATIOTEMPORAL WATCH</td>
+      <td>SCENARIO-BASED; VERIFY WITH OFFICIAL SURVEILLANCE</td>
+    </tr>
+    <tr>
+      <td>2025-01</td>
+      <td>1206312000</td>
+      <td>South Cotabato</td>
+      <td>POLOMOLOK</td>
+      <td>1.348</td>
+      <td>18.719</td>
+      <td>HOT_SPOT_90</td>
+      <td>1</td>
+      <td>11</td>
+      <td>76.025</td>
+      <td>HIGH</td>
+      <td>81.229</td>
+      <td>TRANSMISSION_PRESSURE_PROXY+CONNECTED_HOTSPOT_CLUSTER+TESTING_CENTER_GAP</td>
+      <td>DYNAMIC SPATIOTEMPORAL WATCH</td>
+      <td>SCENARIO-BASED; VERIFY WITH OFFICIAL SURVEILLANCE</td>
+    </tr>
+    <tr>
+      <td>2025-01</td>
+      <td>1206317000</td>
+      <td>South Cotabato</td>
+      <td>TUPI</td>
+      <td>0.305</td>
+      <td>13.013</td>
+      <td>HOT_SPOT_99</td>
+      <td>1</td>
+      <td>11</td>
+      <td>75.341</td>
+      <td>HIGH</td>
+      <td>78.321</td>
+      <td>TRANSMISSION_PRESSURE_PROXY+STATISTICAL_HOTSPOT+CONNECTED_HOTSPOT_CLUSTER+TESTING_CENTER_GAP+NEIGHBOR_INFECTIOUS_PRESSURE</td>
+      <td>DYNAMIC SPATIOTEMPORAL WATCH</td>
+      <td>SCENARIO-BASED; VERIFY WITH OFFICIAL SURVEILLANCE</td>
+    </tr>
+    <tr>
+      <td>2025-01</td>
+      <td>1206302000</td>
+      <td>South Cotabato</td>
+      <td>BANGA</td>
+      <td>0.628</td>
+      <td>10.439</td>
+      <td>HOT_SPOT_99</td>
+      <td>1</td>
+      <td>11</td>
+      <td>70.481</td>
+      <td>HIGH</td>
+      <td>58.047</td>
+      <td>TRANSMISSION_PRESSURE_PROXY+STATISTICAL_HOTSPOT+CONNECTED_HOTSPOT_CLUSTER+NEIGHBOR_INFECTIOUS_PRESSURE</td>
+      <td>DYNAMIC SPATIOTEMPORAL WATCH</td>
+      <td>SCENARIO-BASED; VERIFY WITH OFFICIAL SURVEILLANCE</td>
+    </tr>
+    <tr>
+      <td>2025-01</td>
+      <td>1206502000</td>
+      <td>Sultan Kudarat</td>
+      <td>COLUMBIO</td>
+      <td>0.151</td>
+      <td>12.370</td>
+      <td>HOT_SPOT_90</td>
+      <td>1</td>
+      <td>11</td>
+      <td>66.297</td>
+      <td>HIGH</td>
+      <td>62.514</td>
+      <td>TRANSMISSION_PRESSURE_PROXY+CONNECTED_HOTSPOT_CLUSTER+NEIGHBOR_INFECTIOUS_PRESSURE</td>
+      <td>DYNAMIC SPATIOTEMPORAL WATCH</td>
+      <td>SCENARIO-BASED; VERIFY WITH OFFICIAL SURVEILLANCE</td>
+    </tr>
+    <tr>
+      <td>2025-01</td>
+      <td>1230800000</td>
+      <td>General Santos City</td>
+      <td>GENERAL SANTOS</td>
+      <td>5.243</td>
+      <td>21.263</td>
+      <td>NOT_SIGNIFICANT</td>
+      <td>0</td>
+      <td>0</td>
+      <td>65.619</td>
+      <td>HIGH</td>
+      <td>74.140</td>
+      <td>TRANSMISSION_PRESSURE_PROXY+TESTING_CENTER_GAP</td>
+      <td>DYNAMIC SPATIOTEMPORAL WATCH</td>
+      <td>SCENARIO-BASED; VERIFY WITH OFFICIAL SURVEILLANCE</td>
+    </tr>
+    <tr>
+      <td>2025-01</td>
+      <td>1208007000</td>
+      <td>Sarangani</td>
+      <td>MALUNGON</td>
+      <td>0.734</td>
+      <td>8.911</td>
+      <td>HOT_SPOT_95</td>
+      <td>1</td>
+      <td>11</td>
+      <td>60.928</td>
+      <td>MODERATE</td>
+      <td>56.444</td>
+      <td>STATISTICAL_HOTSPOT+CONNECTED_HOTSPOT_CLUSTER+NEIGHBOR_INFECTIOUS_PRESSURE</td>
+      <td>DYNAMIC SPATIOTEMPORAL WATCH</td>
+      <td>SCENARIO-BASED; VERIFY WITH OFFICIAL SURVEILLANCE</td>
+    </tr>
+    <tr>
+      <td>2025-02</td>
+      <td>1206315000</td>
+      <td>South Cotabato</td>
+      <td>TANTANGAN</td>
+      <td>2.394</td>
+      <td>19.765</td>
+      <td>HOT_SPOT_99</td>
+      <td>1</td>
+      <td>12</td>
+      <td>91.961</td>
+      <td>CRITICAL</td>
+      <td>79.043</td>
+      <td>TRANSMISSION_PRESSURE_PROXY+STATISTICAL_HOTSPOT+CONNECTED_HOTSPOT_CLUSTER+TESTING_CENTER_GAP+NEIGHBOR_INFECTIOUS_PRESSURE</td>
+      <td>DYNAMIC SPATIOTEMPORAL WATCH</td>
+      <td>SCENARIO-BASED; VERIFY WITH OFFICIAL SURVEILLANCE</td>
+    </tr>
+    <tr>
+      <td>2025-02</td>
+      <td>1206311000</td>
+      <td>South Cotabato</td>
+      <td>NORALA</td>
+      <td>0.932</td>
+      <td>18.777</td>
+      <td>HOT_SPOT_99</td>
+      <td>1</td>
+      <td>12</td>
+      <td>89.045</td>
+      <td>CRITICAL</td>
+      <td>76.343</td>
+      <td>TRANSMISSION_PRESSURE_PROXY+STATISTICAL_HOTSPOT+CONNECTED_HOTSPOT_CLUSTER+TESTING_CENTER_GAP+NEIGHBOR_INFECTIOUS_PRESSURE</td>
+      <td>DYNAMIC SPATIOTEMPORAL WATCH</td>
+      <td>SCENARIO-BASED; VERIFY WITH OFFICIAL SURVEILLANCE</td>
+    </tr>
+    <tr>
+      <td>2025-02</td>
+      <td>1206318000</td>
+      <td>South Cotabato</td>
+      <td>SANTO NIÑO</td>
+      <td>0.973</td>
+      <td>22.275</td>
+      <td>HOT_SPOT_95</td>
+      <td>1</td>
+      <td>12</td>
+      <td>84.249</td>
+      <td>CRITICAL</td>
+      <td>71.377</td>
+      <td>TRANSMISSION_PRESSURE_PROXY+STATISTICAL_HOTSPOT+CONNECTED_HOTSPOT_CLUSTER+TESTING_CENTER_GAP+NEIGHBOR_INFECTIOUS_PRESSURE</td>
+      <td>DYNAMIC SPATIOTEMPORAL WATCH</td>
+      <td>SCENARIO-BASED; VERIFY WITH OFFICIAL SURVEILLANCE</td>
+    </tr>
+    <tr>
+      <td>2025-02</td>
+      <td>1206511000</td>
+      <td>Sultan Kudarat</td>
+      <td>TACURONG</td>
+      <td>4.894</td>
+      <td>20.965</td>
+      <td>HOT_SPOT_90</td>
+      <td>1</td>
+      <td>12</td>
+      <td>82.968</td>
+      <td>CRITICAL</td>
+      <td>74.026</td>
+      <td>TRANSMISSION_PRESSURE_PROXY+CONNECTED_HOTSPOT_CLUSTER+TESTING_CENTER_GAP+NEIGHBOR_INFECTIOUS_PRESSURE</td>
+      <td>DYNAMIC SPATIOTEMPORAL WATCH</td>
+      <td>SCENARIO-BASED; VERIFY WITH OFFICIAL SURVEILLANCE</td>
+    </tr>
+    <tr>
+      <td>2025-02</td>
+      <td>1206314000</td>
+      <td>South Cotabato</td>
+      <td>TAMPAKAN</td>
+      <td>0.975</td>
+      <td>14.569</td>
+      <td>HOT_SPOT_99</td>
+      <td>1</td>
+      <td>12</td>
+      <td>81.460</td>
+      <td>CRITICAL</td>
+      <td>75.192</td>
+      <td>TRANSMISSION_PRESSURE_PROXY+STATISTICAL_HOTSPOT+CONNECTED_HOTSPOT_CLUSTER+TESTING_CENTER_GAP+NEIGHBOR_INFECTIOUS_PRESSURE</td>
+      <td>DYNAMIC SPATIOTEMPORAL WATCH</td>
+      <td>SCENARIO-BASED; VERIFY WITH OFFICIAL SURVEILLANCE</td>
+    </tr>
+    <tr>
+      <td>2025-02</td>
+      <td>1206306000</td>
+      <td>South Cotabato</td>
+      <td>KORONADAL</td>
+      <td>10.718</td>
+      <td>37.845</td>
+      <td>HOT_SPOT_99</td>
+      <td>1</td>
+      <td>12</td>
+      <td>79.756</td>
+      <td>HIGH</td>
+      <td>68.700</td>
+      <td>TRANSMISSION_PRESSURE_PROXY+STATISTICAL_HOTSPOT+CONNECTED_HOTSPOT_CLUSTER</td>
+      <td>DYNAMIC SPATIOTEMPORAL WATCH</td>
+      <td>SCENARIO-BASED; VERIFY WITH OFFICIAL SURVEILLANCE</td>
+    </tr>
+    <tr>
+      <td>2025-02</td>
+      <td>1206302000</td>
+      <td>South Cotabato</td>
+      <td>BANGA</td>
+      <td>4.306</td>
+      <td>15.093</td>
+      <td>HOT_SPOT_99</td>
+      <td>1</td>
+      <td>12</td>
+      <td>79.284</td>
+      <td>HIGH</td>
+      <td>64.095</td>
+      <td>TRANSMISSION_PRESSURE_PROXY+STATISTICAL_HOTSPOT+CONNECTED_HOTSPOT_CLUSTER+NEIGHBOR_INFECTIOUS_PRESSURE</td>
+      <td>DYNAMIC SPATIOTEMPORAL WATCH</td>
+      <td>SCENARIO-BASED; VERIFY WITH OFFICIAL SURVEILLANCE</td>
+    </tr>
+    <tr>
+      <td>2025-02</td>
+      <td>1206317000</td>
+      <td>South Cotabato</td>
+      <td>TUPI</td>
+      <td>1.481</td>
+      <td>14.869</td>
+      <td>HOT_SPOT_99</td>
+      <td>1</td>
+      <td>12</td>
+      <td>75.877</td>
+      <td>HIGH</td>
+      <td>79.040</td>
+      <td>TRANSMISSION_PRESSURE_PROXY+STATISTICAL_HOTSPOT+CONNECTED_HOTSPOT_CLUSTER+TESTING_CENTER_GAP+NEIGHBOR_INFECTIOUS_PRESSURE</td>
+      <td>DYNAMIC SPATIOTEMPORAL WATCH</td>
+      <td>SCENARIO-BASED; VERIFY WITH OFFICIAL SURVEILLANCE</td>
+    </tr>
+    <tr>
+      <td>2025-02</td>
+      <td>1206312000</td>
+      <td>South Cotabato</td>
+      <td>POLOMOLOK</td>
+      <td>5.422</td>
+      <td>21.176</td>
+      <td>HOT_SPOT_90</td>
+      <td>1</td>
+      <td>12</td>
+      <td>74.583</td>
+      <td>HIGH</td>
+      <td>79.444</td>
+      <td>TRANSMISSION_PRESSURE_PROXY+CONNECTED_HOTSPOT_CLUSTER+TESTING_CENTER_GAP</td>
+      <td>DYNAMIC SPATIOTEMPORAL WATCH</td>
+      <td>SCENARIO-BASED; VERIFY WITH OFFICIAL SURVEILLANCE</td>
+    </tr>
+    <tr>
+      <td>2025-02</td>
+      <td>1230800000</td>
+      <td>General Santos City</td>
+      <td>GENERAL SANTOS</td>
+      <td>24.403</td>
+      <td>24.154</td>
+      <td>NOT_SIGNIFICANT</td>
+      <td>0</td>
+      <td>0</td>
+      <td>66.245</td>
+      <td>HIGH</td>
+      <td>74.295</td>
+      <td>TRANSMISSION_PRESSURE_PROXY+TESTING_CENTER_GAP</td>
+      <td>DYNAMIC SPATIOTEMPORAL WATCH</td>
+      <td>SCENARIO-BASED; VERIFY WITH OFFICIAL SURVEILLANCE</td>
+    </tr>
+    <tr>
+      <td>2025-02</td>
+      <td>1206313000</td>
+      <td>South Cotabato</td>
+      <td>SURALLAH</td>
+      <td>3.762</td>
+      <td>17.698</td>
+      <td>NOT_SIGNIFICANT</td>
+      <td>0</td>
+      <td>0</td>
+      <td>65.539</td>
+      <td>HIGH</td>
+      <td>60.685</td>
+      <td>TRANSMISSION_PRESSURE_PROXY</td>
+      <td>DYNAMIC SPATIOTEMPORAL WATCH</td>
+      <td>SCENARIO-BASED; VERIFY WITH OFFICIAL SURVEILLANCE</td>
+    </tr>
+    <tr>
+      <td>2025-02</td>
+      <td>1206502000</td>
+      <td>Sultan Kudarat</td>
+      <td>COLUMBIO</td>
+      <td>0.657</td>
+      <td>14.318</td>
+      <td>HOT_SPOT_90</td>
+      <td>1</td>
+      <td>12</td>
+      <td>64.624</td>
+      <td>MODERATE</td>
+      <td>61.417</td>
+      <td>CONNECTED_HOTSPOT_CLUSTER+NEIGHBOR_INFECTIOUS_PRESSURE</td>
+      <td>DYNAMIC SPATIOTEMPORAL WATCH</td>
+      <td>SCENARIO-BASED; VERIFY WITH OFFICIAL SURVEILLANCE</td>
+    </tr>
+    <tr>
+      <td>2025-02</td>
+      <td>1206507000</td>
+      <td>Sultan Kudarat</td>
+      <td>LUTAYAN</td>
+      <td>0.651</td>
+      <td>2.734</td>
+      <td>HOT_SPOT_95</td>
+      <td>1</td>
+      <td>12</td>
+      <td>56.879</td>
+      <td>MODERATE</td>
+      <td>60.494</td>
+      <td>STATISTICAL_HOTSPOT+CONNECTED_HOTSPOT_CLUSTER+NEIGHBOR_INFECTIOUS_PRESSURE</td>
+      <td>DYNAMIC SPATIOTEMPORAL WATCH</td>
+      <td>SCENARIO-BASED; VERIFY WITH OFFICIAL SURVEILLANCE</td>
+    </tr>
+    <tr>
+      <td>2025-03</td>
+      <td>1206311000</td>
+      <td>South Cotabato</td>
+      <td>NORALA</td>
+      <td>2.409</td>
+      <td>19.594</td>
+      <td>HOT_SPOT_99</td>
+      <td>1</td>
+      <td>12</td>
+      <td>96.567</td>
+      <td>CRITICAL</td>
+      <td>83.609</td>
+      <td>TRANSMISSION_PRESSURE_PROXY+STATISTICAL_HOTSPOT+CONNECTED_HOTSPOT_CLUSTER+TESTING_CENTER_GAP+NEIGHBOR_INFECTIOUS_PRESSURE</td>
+      <td>DYNAMIC SPATIOTEMPORAL WATCH</td>
+      <td>SCENARIO-BASED; VERIFY WITH OFFICIAL SURVEILLANCE</td>
+    </tr>
+    <tr>
+      <td>2025-03</td>
+      <td>1206315000</td>
+      <td>South Cotabato</td>
+      <td>TANTANGAN</td>
+      <td>1.843</td>
+      <td>21.466</td>
+      <td>HOT_SPOT_99</td>
+      <td>1</td>
+      <td>12</td>
+      <td>89.682</td>
+      <td>CRITICAL</td>
+      <td>76.867</td>
+      <td>TRANSMISSION_PRESSURE_PROXY+STATISTICAL_HOTSPOT+CONNECTED_HOTSPOT_CLUSTER+TESTING_CENTER_GAP+NEIGHBOR_INFECTIOUS_PRESSURE</td>
+      <td>DYNAMIC SPATIOTEMPORAL WATCH</td>
+      <td>SCENARIO-BASED; VERIFY WITH OFFICIAL SURVEILLANCE</td>
+    </tr>
+    <tr>
+      <td>2025-03</td>
+      <td>1206318000</td>
+      <td>South Cotabato</td>
+      <td>SANTO NIÑO</td>
+      <td>2.386</td>
+      <td>25.601</td>
+      <td>HOT_SPOT_95</td>
+      <td>1</td>
+      <td>12</td>
+      <td>89.506</td>
+      <td>CRITICAL</td>
+      <td>77.067</td>
+      <td>TRANSMISSION_PRESSURE_PROXY+STATISTICAL_HOTSPOT+CONNECTED_HOTSPOT_CLUSTER+TESTING_CENTER_GAP</td>
+      <td>DYNAMIC SPATIOTEMPORAL WATCH</td>
+      <td>SCENARIO-BASED; VERIFY WITH OFFICIAL SURVEILLANCE</td>
+    </tr>
+    <tr>
+      <td>2025-03</td>
+      <td>1206314000</td>
+      <td>South Cotabato</td>
+      <td>TAMPAKAN</td>
+      <td>1.932</td>
+      <td>16.744</td>
+      <td>HOT_SPOT_99</td>
+      <td>1</td>
+      <td>12</td>
+      <td>86.864</td>
+      <td>CRITICAL</td>
+      <td>77.156</td>
+      <td>TRANSMISSION_PRESSURE_PROXY+STATISTICAL_HOTSPOT+CONNECTED_HOTSPOT_CLUSTER+TESTING_CENTER_GAP+NEIGHBOR_INFECTIOUS_PRESSURE</td>
+      <td>DYNAMIC SPATIOTEMPORAL WATCH</td>
+      <td>SCENARIO-BASED; VERIFY WITH OFFICIAL SURVEILLANCE</td>
+    </tr>
+    <tr>
+      <td>2025-03</td>
+      <td>1206511000</td>
+      <td>Sultan Kudarat</td>
+      <td>TACURONG</td>
+      <td>5.731</td>
+      <td>23.241</td>
+      <td>HOT_SPOT_90</td>
+      <td>1</td>
+      <td>12</td>
+      <td>82.165</td>
+      <td>CRITICAL</td>
+      <td>73.360</td>
+      <td>TRANSMISSION_PRESSURE_PROXY+CONNECTED_HOTSPOT_CLUSTER+TESTING_CENTER_GAP+NEIGHBOR_INFECTIOUS_PRESSURE</td>
+      <td>DYNAMIC SPATIOTEMPORAL WATCH</td>
+      <td>SCENARIO-BASED; VERIFY WITH OFFICIAL SURVEILLANCE</td>
+    </tr>
+  </tbody>
+</table><h2>Generated charts</h2><figure><img src="charts/01_regional_historical_and_forecast.png"><figcaption>01 Regional Historical And Forecast</figcaption></figure><figure><img src="charts/02_dynamic_global_morans_i.png"><figcaption>02 Dynamic Global Morans I</figcaption></figure><figure><img src="charts/03_dynamic_hotspot_alert_counts.png"><figcaption>03 Dynamic Hotspot Alert Counts</figcaption></figure><figure><img src="charts/04_transmission_pressure_ranking.png"><figcaption>04 Transmission Pressure Ranking</figcaption></figure><figure><img src="charts/05_testing_center_priority.png"><figcaption>05 Testing Center Priority</figcaption></figure><figure><img src="charts/06_municipality_forecast_heatmap.png"><figcaption>06 Municipality Forecast Heatmap</figcaption></figure><figure><img src="charts/07_time_series_decomposition_example.png"><figcaption>07 Time Series Decomposition Example</figcaption></figure><figure><img src="charts/08_uncertainty_width.png"><figcaption>08 Uncertainty Width</figcaption></figure><figure><img src="charts/09_population_growth.png"><figcaption>09 Population Growth</figcaption></figure><figure><img src="charts/10_care_cascade_compartments.png"><figcaption>10 Care Cascade Compartments</figcaption></figure><figure><img src="charts/11_transmission_and_treatment_flows.png"><figcaption>11 Transmission And Treatment Flows</figcaption></figure><figure><img src="charts/12_effective_infectious_pool_decomposition.png"><figcaption>12 Effective Infectious Pool Decomposition</figcaption></figure><figure><img src="charts/13_testing_center_expansion.png"><figcaption>13 Testing Center Expansion</figcaption></figure><figure><img src="charts/14_testing_treatment_coverage.png"><figcaption>14 Testing Treatment Coverage</figcaption></figure>
+<h2>Backend outputs</h2><ul><li><code>database/archive_phase2.sqlite</code></li><li><code>tables/monthly_municipality_forecasts.csv</code></li><li><code>tables/dynamic_hotspot_results.csv</code></li><li><code>tables/time_series_decomposition.csv</code></li><li><code>tables/transmission_pressure.csv</code></li><li><code>tables/transmission_compartment_simulation.csv</code></li><li><code>tables/testing_center_establishment_schedule.csv</code></li><li><code>tables/testing_center_recommendations.csv</code></li><li><code>tables/alerts.csv</code></li><li><code>maps/region12_municipalities_gap_filled.geojson</code></li></ul>
+</body></html>

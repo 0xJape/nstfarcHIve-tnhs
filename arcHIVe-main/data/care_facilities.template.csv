@@ -1,0 +1,2 @@
+facility_id,name,facility_type,address,municipality,province,psgc,latitude,longitude,phone,email,services,opening_hours,source_url,verified_on
+R12-001,Replace with verified facility,testing_center,Replace address,GENERAL SANTOS CITY,South Cotabato,126303000,6.1164,125.1716,Replace phone,,HIV testing,Replace hours,https://example.gov.ph,2026-08-07

@@ -1,0 +1,128 @@
+{
+  "project_name": "arcHIVe Region XII Population-Coupled HIV Transmission, Treatment, Forecast and GIS Decision-Support System",
+  "random_seed": 20260728,
+  "administrative_scope": {
+    "region": "SOCCSKSARGEN (Region XII)",
+    "region_psgc": "1200000000",
+    "expected_municipalities_and_cities": 49
+  },
+  "boundaries": {
+    "cache_geojson": "data/cache/region12_municipalities_gap_filled.geojson",
+    "cache_metadata": "data/cache/region12_municipalities_metadata.json",
+    "request_timeout_seconds": 90,
+    "force_download": false,
+    "gap_fill_tolerance_degrees": 0.0015,
+    "validation_gap_ratio": 1e-09,
+    "source_priority": [
+      "GeoRiskPH PSA Municipal ArcGIS service",
+      "faeldon/philippines-json-maps 2023 fallback"
+    ]
+  },
+  "projection": {
+    "forecast_start": "2025-01",
+    "forecast_end": "2050-12",
+    "annual_growth_cap": 0.1,
+    "long_term_growth": 0.02,
+    "regional_growth_damping_years": 10.0
+  },
+  "spatial": {
+    "diffusion_weight": 0.1,
+    "temporal_memory_weight": 0.1,
+    "boundary_tolerance_degrees": 8e-05,
+    "minimum_neighbors": 2,
+    "fallback_max_distance_km": 60.0
+  },
+  "uncertainty": {
+    "base_cv": 0.35,
+    "cv_growth_per_year": 0.015,
+    "maximum_cv": 0.9
+  },
+  "testing_center_planning": {
+    "planning_period": "2030-12",
+    "capacity_population_per_center": 180000,
+    "exact_site_requires_official_facility_registry": true
+  },
+  "interface": {
+    "playback_interval_ms": 2600,
+    "gray_outside_region_xii": true,
+    "municipality_boundary_weight_px": 1.15,
+    "province_boundary_weight_px": 3.2,
+    "region_boundary_weight_px": 5.0
+  },
+  "outputs": {
+    "plot_dpi": 220
+  },
+  "scientific_scope": {
+    "municipality_case_data": "Constrained development simulation, not official municipality-time surveillance",
+    "transmission_calculation": "Population-level deterministic compartment and spatial-interaction scenario; not R0, individual risk, or proof of municipality-to-municipality transmission",
+    "facility_recommendations": "Municipality-level planning candidates; not approved facility sites",
+    "treatment_effect": "Testing access accelerates diagnosis, ART linkage, viral suppression, retention, and modest prevention; virally suppressed compartment has zero sexual-transmission weight in the scenario",
+    "population_projection": "Monthly natural increase and net migration are compounded from a 0.55% official regional growth anchor and municipality-specific development rates"
+  },
+  "population_simulation": {
+    "official_regional_annual_growth_anchor": 0.0055,
+    "minimum_annual_growth": 0.001,
+    "maximum_annual_growth": 0.025,
+    "long_term_annual_growth": 0.0055,
+    "growth_damping_years": 15.0,
+    "natural_increase_share": 0.72,
+    "minimum_natural_increase_annual": 0.0015,
+    "urban_migration_pull_annual": 0.004,
+    "migration_damping_years": 12.0,
+    "migration_seasonality_amplitude": 0.18,
+    "migration_peak_month": 6,
+    "maximum_monthly_population_change": 0.0045
+  },
+  "transmission_simulation": {
+    "regional_plhiv_2025": 7700,
+    "diagnosed_fraction": 0.54,
+    "art_fraction_of_diagnosed": 0.71,
+    "suppressed_fraction_of_art": 0.25,
+    "mechanistic_blend_weight": 0.65,
+    "infection_to_diagnosis_ratio_at_calibration": 1.15,
+    "neighbor_force_weight": 0.35,
+    "acute_infectivity_multiplier": 4.0,
+    "infectivity_diagnosed_untreated": 0.75,
+    "infectivity_art_unsuppressed": 0.18,
+    "infectivity_virally_suppressed": 0.0,
+    "direct_center_prevention_max_reduction": 0.18,
+    "transmission_seasonality_amplitude": 0.06,
+    "transmission_peak_month": 3,
+    "maximum_monthly_incidence_per_100k": 4.0,
+    "base_monthly_diagnosis_rate": 0.015,
+    "testing_access_diagnosis_increment": 0.055,
+    "acute_detection_fraction": 0.2,
+    "base_monthly_linkage_rate": 0.08,
+    "testing_access_linkage_increment": 0.14,
+    "base_monthly_suppression_rate": 0.05,
+    "testing_access_suppression_increment": 0.1,
+    "base_monthly_treatment_interruption_rate": 0.007,
+    "testing_access_retention_effect": 0.65,
+    "minimum_monthly_treatment_interruption_rate": 0.002,
+    "monthly_reengagement_rate": 0.025,
+    "monthly_attrition_undiagnosed": 0.0015,
+    "monthly_attrition_diagnosed_no_art": 0.0012,
+    "monthly_attrition_art_unsuppressed": 0.0008,
+    "monthly_attrition_suppressed": 0.0004,
+    "plhiv_migration_prevalence_multiplier": 1.0,
+    "dynamic_regional_ratio_adaptation": 0.2,
+    "dynamic_regional_ratio_min": 0.45,
+    "dynamic_regional_ratio_max": 1.55,
+    "background_incidence_fraction_of_baseline": 0.12,
+    "background_incidence_access_reduction": 0.55
+  },
+  "testing_center_dynamics": {
+    "auto_establish_enabled": true,
+    "capacity_population_per_center": 140000,
+    "neighbor_access_weight": 0.2,
+    "trigger_score": 70,
+    "sustained_months": 6,
+    "construction_lead_months": 9,
+    "cooldown_months": 18,
+    "max_new_centers_per_municipality": 4,
+    "maximum_total_centers": 8,
+    "trigger_rate_per_100k": 18,
+    "trigger_infectious_pool_per_100k": 120,
+    "trigger_neighbor_infectious_pool_per_100k": 100
+  }
+}

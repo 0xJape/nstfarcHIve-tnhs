@@ -1,0 +1,40 @@
+{
+  "created_at_utc": "2026-08-07T02:14:51.850956+00:00",
+  "source": "GeoRiskPH PSA Municipal ArcGIS",
+  "cache_path": "C:\\Website_Projects\\ARCHIVE\\arcHIVe-main\\data\\cache\\region12_municipalities_gap_filled.geojson",
+  "validation_before": {
+    "expected_count": 49,
+    "feature_count": 49,
+    "missing_psgc": [],
+    "extra_psgc": [],
+    "null_geometries": [],
+    "invalid_geometries": [],
+    "name_mismatches": {},
+    "valid": true
+  },
+  "validation_after": {
+    "expected_count": 49,
+    "feature_count": 49,
+    "missing_psgc": [],
+    "extra_psgc": [],
+    "null_geometries": [],
+    "invalid_geometries": [],
+    "name_mismatches": {},
+    "valid": true
+  },
+  "gap_report": {
+    "feature_count": 49,
+    "tolerance_degrees": 0.0015,
+    "detected_gap_face_count": 4855,
+    "detected_overlap_face_count": 0,
+    "detected_gap_area_degrees2": 0.0002935859039797684,
+    "detected_overlap_area_degrees2": 0.0,
+    "total_added_area_degrees2": 0.0002935859051152473,
+    "total_removed_overlap_area_degrees2": 0.00015737201712952382,
+    "residual_uncovered_ratio": 0.0,
+    "residual_overlap_ratio": 0.0,
+    "fully_covered": true,
+    "non_overlapping": true
+  },
+  "operational": true
+}
