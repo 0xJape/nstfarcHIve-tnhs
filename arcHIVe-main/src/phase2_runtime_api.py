@@ -11,6 +11,8 @@ import secrets
 import hashlib
 import hmac
 import csv
+import threading
+import time
 from urllib.request import Request, urlopen
 from contextlib import closing
 from http import HTTPStatus
@@ -528,6 +530,15 @@ def main() -> int:
     Handler.run_dir = run_dir
     Handler.database_path = run_dir / "database" / "archive_phase2.sqlite"
     Handler.cors_origin = args.cors_origin
+    def dispatch_loop() -> None:
+        while True:
+            try:
+                dispatch_webhook_outbox()
+            except Exception as error:
+                print(f"Webhook dispatch error: {type(error).__name__}: {error}", file=sys.stderr, flush=True)
+            time.sleep(60)
+
+    threading.Thread(target=dispatch_loop, name="webhook-dispatch", daemon=True).start()
     ThreadingHTTPServer.daemon_threads = True
     ThreadingHTTPServer.block_on_close = False
     server = ThreadingHTTPServer((args.host, args.port), Handler)
