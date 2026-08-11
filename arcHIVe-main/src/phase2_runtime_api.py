@@ -209,7 +209,7 @@ class Handler(BaseHTTPRequestHandler):
             except Exception as exc: print(f"Chat upstream error: {type(exc).__name__}: {exc}", file=sys.stderr, flush=True); self.send_json({"error": "Chat service unavailable"}, status=502)
             return
         if path == "/api/pre-registrations":
-            if not operational_db_available(): self.send_json({"error": "Operational database unavailable"}, status=503); return
+            if not operational_db_ready(): self.send_json({"error": "Operational database unavailable"}, status=503); return
             try:
                 length = int(self.headers.get("Content-Length", "0")); payload = json.loads(self.rfile.read(length) or b"{}")
                 municipality = str(payload.get("municipality", "")).strip()[:120]
@@ -257,7 +257,7 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/api/admin/patients":
             actor = self.require_auth()
             if not actor: return
-            if not operational_db_available():
+            if not operational_db_ready():
                 self.send_json({"error": "Operational database unavailable"}, status=503)
                 return
             try:
@@ -293,7 +293,7 @@ class Handler(BaseHTTPRequestHandler):
         if path.startswith("/api/admin/patients/") and path.endswith("/assignments"):
             actor = self.require_auth()
             if not actor: return
-            if not operational_db_available(): self.send_json({"error": "Operational database unavailable"}, status=503); return
+            if not operational_db_ready(): self.send_json({"error": "Operational database unavailable"}, status=503); return
             try:
                 patient_code = unquote(path.split("/api/admin/patients/", 1)[1].removesuffix("/assignments"))
                 length = int(self.headers.get("Content-Length", "0"))
@@ -366,23 +366,23 @@ class Handler(BaseHTTPRequestHandler):
                 return
             if path == "/api/admin/patients":
                 if not self.require_auth(): return
-                if not operational_db_available():
+                if not operational_db_ready():
                     self.send_json({"error": "Operational database unavailable"}, status=503)
                     return
                 self.send_json(list_patients())
                 return
             if path == "/api/public/facilities":
-                if not operational_db_available(): self.send_json({"error": "Operational database unavailable"}, status=503); return
+                if not operational_db_ready(): self.send_json({"error": "Operational database unavailable"}, status=503); return
                 self.send_json(list_public_facilities())
                 return
             if path == "/api/admin/pre-registrations":
                 if not self.require_auth(): return
-                if not operational_db_available(): self.send_json({"error": "Operational database unavailable"}, status=503); return
+                if not operational_db_ready(): self.send_json({"error": "Operational database unavailable"}, status=503); return
                 self.send_json(list_pre_registrations())
                 return
             if path == "/api/admin/facilities":
                 if not self.require_auth(): return
-                if not operational_db_available(): self.send_json({"error": "Operational database unavailable"}, status=503); return
+                if not operational_db_ready(): self.send_json({"error": "Operational database unavailable"}, status=503); return
                 self.send_json(list_facilities())
                 return
             if path == "/api/dates":
