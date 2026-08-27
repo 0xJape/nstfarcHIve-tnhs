@@ -37,7 +37,7 @@ export default function Intro({ onEnter }: Props) {
     <div className="intro-backdrop" aria-hidden="true" />
     <div className="intro-wash" aria-hidden="true" />
     <nav className="intro-nav" aria-label="Introduction navigation">
-      <span>arc<span>HIV</span>e</span>
+      <img src="/arcHIVelogofinal.png" alt="ARCHIVE" />
       <button onClick={onEnter}>Enter site</button>
     </nav>
     <div className="intro-content">

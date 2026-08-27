@@ -154,8 +154,7 @@ function App() {
       {dataLoading && <div className="data-loading" role="status" aria-live="polite"><div className="data-loading-card"><div className="loading-spinner" aria-hidden="true" /><strong>Loading regional data</strong><p>Preparing current municipality information and public-health trends.</p><small>This may take a few seconds. No personal HIV status is collected.</small></div></div>}
       <header className="site-header">
         <button className="brand" onClick={() => navigate('home')} aria-label="ARCHIVE home">
-          <span className="ribbon" aria-hidden="true">◆</span>
-          <span>arc<span>HIV</span>e</span>
+          <img src="/arcHIVelogofinal.png" alt="ARCHIVE" />
         </button>
         <button className="menu-toggle" onClick={() => setMenuOpen((open) => !open)} aria-expanded={menuOpen} aria-controls="main-navigation" aria-label="Toggle navigation">
           {menuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
