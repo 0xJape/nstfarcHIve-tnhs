@@ -96,7 +96,7 @@ export default function MapView({ geometry, rows, metric, facilities = [], showF
 
   return <div className="map-view">
     <MapContainer className="native-map" center={[6.55, 124.85]} zoom={8} scrollWheelZoom>
-      <TileLayer attribution='&copy; <a href="https://carto.com/attributions">CARTO</a>' url="https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png" subdomains="abcd" />
+      <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" subdomains="abc" />
       <FitRegion geometry={geometry} />
       <MunicipalityLabelZoom />
       <FocusMunicipality geometry={geometry} psgc={selectedPsgc} />
