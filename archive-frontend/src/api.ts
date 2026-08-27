@@ -47,6 +47,8 @@ export type PatientSummary = { patient_code: string; care_status: string; prefer
 export type PatientIntake = { email?: string; phone?: string; preferred_channel: 'email' | 'sms'; email_consent: boolean; sms_consent: boolean; municipality: string; age_group: string; diagnosis_date?: string; treatment_status: string; referral_notes?: string }
 export type Facility = { facility_code: string; name: string; facility_type: string; municipality: string; province: string; address?: string; latitude?: number; longitude?: number; services: string; opening_hours: string; phone?: string; email?: string; contact_people?: string; active?: boolean; verified_on?: string }
 export type Municipality = { PSGC: string; LOCATION: string; PROVINCE: string }
+export type HistoricalRow = { PERIOD: string; PSGC: string; LOCATION: string; PROVINCE: string; REPORTED_HIV_CASES: number; ROLLING_12M_CASES: number; CASES_PER_100K: number; SIX_MONTH_GROWTH_PCT: number; ACTIVE_TESTING_CENTERS: number; FACILITY_NEED_SCORE: number; SOURCE: string }
+export type SampleTrendRow = { YEAR: string; CATEGORY: string; CASES: number; SOURCE: string }
 export type PreRegistration = { municipality: string; preferred_channel: 'email' | 'sms'; contact_value: string; email: string; phone: string; consent: boolean; facility_code: string }
 export type PendingRequest = { reference_code: string; municipality: string; preferred_channel: 'email' | 'sms'; contact_value?: string; email?: string; phone?: string; status: string; created_at: string }
 
@@ -71,7 +73,8 @@ export const api = {
   health: () => get<Health>('/api/health'),
   metadata: () => get<Metadata>('/api/metadata'),
   dates: () => get<DateRow[]>('/api/dates'),
-  historicalTrend: () => get<Array<{ PERIOD: string; ROLLING_12M_CASES: number; REPORTED_HIV_CASES: number; SOURCE: string }>>('/api/public/historical-cases'),
+  historicalTrend: (psgc = '') => get<HistoricalRow[]>(`/api/public/historical-cases${psgc ? `?psgc=${encodeURIComponent(psgc)}` : ''}`),
+  hivSample: (group: 'AGE BRACKET' | 'GENDER', municipality = '') => get<SampleTrendRow[]>(`/api/public/hiv-sample?group=${encodeURIComponent(group)}${municipality ? `&municipality=${encodeURIComponent(municipality)}` : ''}`),
   snapshot: (period: string) =>
     get<SnapshotRow[]>(`/api/snapshot?period=${encodeURIComponent(period)}`),
   testingCenters: () => get<TestingCenter[]>('/api/testing-centers'),

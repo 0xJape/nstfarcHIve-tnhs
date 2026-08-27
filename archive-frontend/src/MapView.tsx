@@ -7,7 +7,7 @@ import { api, type Facility, type SnapshotRow } from './api'
 import 'leaflet/dist/leaflet.css'
 
 type Properties = { PSGC: string; LOCATION: string; PROVINCE: string }
-type Props = { geometry: FeatureCollection<Geometry, Properties>; rows: SnapshotRow[]; metric: keyof SnapshotRow; facilities?: Facility[]; overlayMetrics?: (keyof SnapshotRow)[]; showChoropleth?: boolean; selectedPsgc?: string; onSelect?: (row: SnapshotRow | undefined) => void }
+type Props = { geometry: FeatureCollection<Geometry, Properties>; rows: SnapshotRow[]; metric: keyof SnapshotRow; facilities?: Facility[]; showFacilities?: boolean; overlayMetrics?: (keyof SnapshotRow)[]; showChoropleth?: boolean; selectedPsgc?: string; onSelect?: (row: SnapshotRow | undefined) => void }
 
 const colors = ['#fff5f0', '#fcbba1', '#fb6a4a', '#cb181d', '#67000d']
 const heatColors = ['#00a83b', '#7ed321', '#f5d928', '#f28b22', '#d71920']
@@ -53,7 +53,7 @@ function FocusMunicipality({ geometry, psgc }: { geometry: FeatureCollection<Geo
   return null
 }
 
-export default function MapView({ geometry, rows, metric, facilities = [], overlayMetrics = [], showChoropleth = true, selectedPsgc, onSelect }: Props) {
+export default function MapView({ geometry, rows, metric, facilities = [], showFacilities = true, overlayMetrics = [], showChoropleth = true, selectedPsgc, onSelect }: Props) {
   const [loadedFacilities, setLoadedFacilities] = useState<Facility[]>(facilities)
   useEffect(() => { if (!facilities.length) api.publicFacilities().then(setLoadedFacilities).catch(() => undefined) }, [facilities.length])
   facilities = loadedFacilities
@@ -120,7 +120,7 @@ export default function MapView({ geometry, rows, metric, facilities = [], overl
         const center = geoJSON(feature).getBounds().getCenter()
         return <CircleMarker key={`risk-${row.PSGC}-${row.PERIOD}`} center={center} radius={Math.max(3, Math.min(10, value / 10))} pathOptions={{ color: '#fff', weight: 1, fillColor: '#e31b36', fillOpacity: .7 }}><Tooltip>Risk overlay: {value.toFixed(1)}</Tooltip></CircleMarker>
       })}
-      {facilities.filter((facility) => Number.isFinite(facility.latitude) && Number.isFinite(facility.longitude)).map((facility) => <Marker key={facility.facility_code} icon={facilityPin} position={[facility.latitude as number, facility.longitude as number]}><Popup><div className="facility-popup"><span className="facility-popup-kicker">Verified care location</span><h3>{facility.name}</h3><span className="facility-popup-type">{facility.facility_type.replaceAll('_', ' ')}</span><div className="facility-popup-address">{[facility.address, facility.municipality, facility.province].filter(Boolean).join(' · ')}</div>{facility.services && <div className="facility-popup-services">{facility.services.split(';').map((service) => <span key={service}>{service.trim()}</span>)}</div>}<small className="facility-popup-note">Contact center directly for current schedules and availability.</small></div></Popup></Marker>)}
+      {showFacilities && facilities.filter((facility) => Number.isFinite(facility.latitude) && Number.isFinite(facility.longitude)).map((facility) => <Marker key={facility.facility_code} icon={facilityPin} position={[facility.latitude as number, facility.longitude as number]}><Popup><div className="facility-popup"><span className="facility-popup-kicker">Verified care location</span><h3>{facility.name}</h3><span className="facility-popup-type">{facility.facility_type.replaceAll('_', ' ')}</span><div className="facility-popup-address">{[facility.address, facility.municipality, facility.province].filter(Boolean).join(' · ')}</div>{facility.services && <div className="facility-popup-services">{facility.services.split(';').map((service) => <span key={service}>{service.trim()}</span>)}</div>}<small className="facility-popup-note">Contact center directly for current schedules and availability.</small></div></Popup></Marker>)}
     </MapContainer>
     <div className="legend" aria-label="Map value scale">{heatmap ? 'Lower density' : 'Lower'} {(heatmap ? heatColors : colors).map((color) => <span key={color} style={{ background: color }} />)} {heatmap ? 'Hot core' : 'Higher'}</div>
   </div>

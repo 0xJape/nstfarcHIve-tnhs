@@ -7,12 +7,14 @@ import AdminDashboard from './AdminDashboard'
 import AdminPatients from './AdminPatients'
 import PreRegistration from './PreRegistration'
 import ModelPage from './ModelPage'
+import HistoricalTrends from './HistoricalTrends'
+import ModelAnalytics from './ModelAnalytics'
 import './App.css'
 import './care-dialog.css'
 
-type View = 'intro' | 'home' | 'map' | 'education' | 'model' | 'care' | 'about' | 'confirm' | 'control' | 'patients'
+type View = 'intro' | 'home' | 'map' | 'education' | 'model' | 'care' | 'about' | 'confirm' | 'control' | 'analytics' | 'patients'
 type HistoryPoint = { period: string; cases: number; reported: number; pressure: number }
-const paths: Record<View, string> = { intro: '/', home: '/home', map: '/map', education: '/education', model: '/model', care: '/care', about: '/about', confirm: '/confirm', control: '/control', patients: '/control/patients' }
+const paths: Record<View, string> = { intro: '/', home: '/home', map: '/map', education: '/education', model: '/model', care: '/care', about: '/about', confirm: '/confirm', control: '/control', analytics: '/control/analytics', patients: '/control/patients' }
 const viewFromPath = (): View => (Object.entries(paths).find(([, path]) => path === location.pathname)?.[0] as View | undefined) ?? 'intro'
 
 const publicNav: { id: View; label: string }[] = [
@@ -96,12 +98,12 @@ function App() {
   }, [currentPeriod, metric])
 
   useEffect(() => {
-    if (!loggedIn || (view !== 'control' && view !== 'patients')) return
+    if (!loggedIn || (view !== 'control' && view !== 'analytics' && view !== 'patients')) return
     Promise.all([api.metadata(), api.regionSummary(), api.alerts()]).then(([nextMetadata, nextSummary, nextAlerts]) => { setMetadata(nextMetadata); setSummary(nextSummary); setAlerts(nextAlerts) }).catch(() => { sessionStorage.removeItem('archive-auth-token'); setLoggedIn(false) })
   }, [loggedIn, view])
 
   useEffect(() => {
-    if ((view === 'control' || view === 'patients') && !loggedIn) {
+    if ((view === 'control' || view === 'analytics' || view === 'patients') && !loggedIn) {
       globalThis.history.replaceState(null, '', paths.home)
       setView('home')
       loginDialog.current?.showModal()
@@ -163,6 +165,7 @@ function App() {
             <button key={item.id} className={view === item.id ? 'active' : ''} aria-current={view === item.id ? 'page' : undefined} onClick={() => navigate(item.id)}>{item.label}</button>
           ))}
           {loggedIn && <button className={view === 'control' ? 'active' : ''} onClick={() => navigate('control')}>Data Center</button>}
+          {loggedIn && <button className={view === 'analytics' ? 'active' : ''} onClick={() => navigate('analytics')}>Analytics</button>}
           {loggedIn && <button className={view === 'patients' ? 'active' : ''} onClick={() => navigate('patients')}>Patients</button>}
           {!loggedIn && <button className="login-link" onClick={() => loginDialog.current?.showModal()}>Log in</button>}
           {loggedIn ? <button className="login-link" onClick={logout}>Log out</button> : <button className="header-care" onClick={openCare}>Find care <ArrowRight size={15} aria-hidden="true" /></button>}
@@ -173,6 +176,8 @@ function App() {
         {view === 'confirm' && <ConfirmReferral />}
         {view === 'model' && <ModelPage />}
         {view === 'control' && <AdminDashboard geometry={geometry} rows={rows} ranking={ranking} alerts={alerts} summary={summary} health={health} metric={metric} selected={selectedMunicipality} periods={periods} currentPeriod={currentPeriod} onPeriodChange={setCurrentPeriod} onMetricChange={setMetric} onSelect={setSelectedMunicipality} />}
+        {view === 'control' && <HistoricalTrends />}
+        {view === 'analytics' && <ModelAnalytics />}
         {view === 'patients' && <AdminPatients />}
         {view === 'control' && <section className="admin-command-center"><aside className="intelligence-panel"><strong>ARCHIVE Intelligence</strong><p>HIV surveillance and MLR–LSTM forecasting.</p><label>Visualization<select value={String(metric)} onChange={(event) => setMetric(event.target.value as keyof SnapshotRow)}><option value="TRANSMISSION_PRESSURE_INDEX">HIV risk</option><option value="PREDICTED_CASES">Predicted cases</option><option value="TESTING_CENTER_NEED_SCORE">Care need</option></select></label><div className="intelligence-kpis"><span>Municipalities<strong>{rows.length || '—'}</strong></span><span>High-risk areas<strong>{rows.filter((row) => Number(row.TRANSMISSION_PRESSURE_INDEX) >= 60).length}</strong></span><span>Alerts<strong>{alerts.length || '—'}</strong></span><span>Forecast periods<strong>{summary.length || '—'}</strong></span></div><small>Aggregate planning scenarios. Not intended for diagnosis.</small></aside><div className="admin-command-map"><div className="admin-command-toolbar"><div><span className="eyebrow">Administrator GIS workspace</span><h1>Region XII Risk Intelligence</h1></div><label className="field">Time period<select><option>Latest available</option></select></label></div>{geometry && rows.length ? <MapView geometry={geometry} rows={rows} metric={metric} onSelect={(row) => setSelectedMunicipality(row ?? null)} /> : <div className="map-placeholder"><p>Start analytics API to load municipality geometry.</p></div>}</div><aside className="admin-ai-panel"><span className="eyebrow">Selected municipality</span>{selectedMunicipality ? <><h2>{selectedMunicipality.LOCATION}</h2><p>{selectedMunicipality.PROVINCE}</p><dl className="municipality-stats"><div><dt>Risk score</dt><dd>{selectedMunicipality.TRANSMISSION_PRESSURE_INDEX?.toFixed(2) ?? '—'}</dd></div><div><dt>Predicted cases</dt><dd>{selectedMunicipality.PREDICTED_CASES?.toFixed(2) ?? '—'}</dd></div><div><dt>Hotspot</dt><dd>{selectedMunicipality.HOTSPOT_CLASS || 'No classification'}</dd></div><div><dt>Testing need</dt><dd>{selectedMunicipality.TESTING_CENTER_NEED_SCORE?.toFixed(2) ?? '—'}</dd></div></dl><div className="ai-recommendation"><span>Planning signal</span><strong>Review testing access and surveillance trend for this municipality.</strong></div></> : <><h2>Select a municipality</h2><p>Click any municipality on map to view its HIV intelligence profile.</p></>}<small>Latest aggregate model run. Not a diagnosis.</small></aside><div className="admin-bottom-cards"><article><span>Municipality rankings</span><strong>{ranking.length || '—'}</strong><small>priority signals</small></article><article><span>Recent alerts</span><strong>{alerts.length || '—'}</strong><small>model-generated</small></article><article><span>Recent reports</span><strong>1</strong><small>latest valid run</small></article><article><span>Recent data uploads</span><strong>1</strong><small>aggregate source</small></article></div></section>}
         {view === 'control' && <><aside className="admin-side-nav admin-side-nav-left"><strong>ARCHIVE</strong><button className="active">Map overview</button><button onClick={() => document.querySelector('.data-center-grid')?.scrollIntoView({ behavior: 'smooth' })}>Analytics</button><button onClick={() => document.querySelector('.alert-list')?.scrollIntoView({ behavior: 'smooth' })}>Alerts</button></aside><aside className="admin-side-nav admin-side-nav-right"><span>MAP LAYERS</span><label><input type="checkbox" defaultChecked /> Municipalities</label><label><input type="checkbox" defaultChecked /> Risk surface</label><label><input type="checkbox" /> Testing centers</label><button onClick={() => setMetric('TRANSMISSION_PRESSURE_INDEX')}>Pressure</button><button onClick={() => setMetric('PREDICTED_CASES')}>Forecast</button><button onClick={() => setMetric('TESTING_CENTER_NEED_SCORE')}>Care need</button></aside></>}
@@ -242,6 +247,7 @@ function App() {
             <div className="home-trend-card"><div><small>For planning teams and the public</small><h3>Where may more support be useful?</h3><p className="home-chart-note">Each bar compares municipalities using a modeled planning score from 0–100. Longer bar means the model suggests greater need for outreach, testing access, or public-health resources. It is not a patient count, infection probability, or personal risk score.</p></div><div className="home-signal-bars">{[...rows].sort((a, b) => Number(b.TRANSMISSION_PRESSURE_INDEX || 0) - Number(a.TRANSMISSION_PRESSURE_INDEX || 0)).map((row) => <div className="home-signal-row" key={row.PSGC}><span>{row.LOCATION}</span><i><b style={{ width: `${Math.min(100, Math.max(4, Number(row.TRANSMISSION_PRESSURE_INDEX || 0)))}%` }} /></i><strong>{Number(row.TRANSMISSION_PRESSURE_INDEX || 0).toFixed(0)}<small>/100</small></strong></div>)}</div><div className="home-signal-definition"><strong>How to read it</strong><span>Read municipality name, then compare bar length and score.</span><span>High score means stronger combined planning signal.</span><span>Low score does not mean no HIV cases or no need for care.</span></div><p className="home-chart-note">This public view supports awareness and resource planning. It does not diagnose anyone or replace official surveillance or medical advice.</p></div>
           </section>
 
+          {view === 'home' && <HistoricalTrends />}
           <section className="home-trust">
             <ShieldCheck size={30} aria-hidden="true" />
             <div><p className="eyebrow">Built with care</p><h2>Your privacy comes first.</h2><p>ARCHIVE displays aggregate planning data only. It does not collect personal HIV status, diagnose anyone, or replace qualified medical advice.</p></div>

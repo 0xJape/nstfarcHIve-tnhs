@@ -1,0 +1,20 @@
+import Plotly from 'plotly.js-dist-min'
+import HistoricalTrends from './HistoricalTrends'
+
+const metrics = {
+  MLR: { train: [0.942, 0.093, 0.213], validation: [0.957, 0.268, 0.374], test: [0.929, 0.368, 0.615] },
+  LSTM: { train: [0.906, 0.095, 0.272], validation: [0.936, 0.310, 0.458], test: [0.909, 0.385, 0.695] },
+  Hybrid: { train: [0.943, 0.090, 0.212], validation: [0.957, 0.270, 0.373], test: [0.929, 0.367, 0.616] },
+}
+
+export default function ModelAnalytics() {
+  return <section className="control-v2 analytics-control"><aside className="control-left"><p className="control-kicker">ARCHIVE Intelligence</p><h1>Model<br />Analytics</h1><p className="control-copy">Training performance and MLR–LSTM planning signals.</p><div className="control-kpis"><article><span>MLR weight</span><strong>85%</strong></article><article><span>LSTM weight</span><strong>15%</strong></article><article><span>Hybrid test R²</span><strong>0.929</strong></article><article><span>Training rows</span><strong>13,524</strong></article></div><div className="control-model"><span>Model run verified</span><strong>MLR–LSTM + spatial analysis</strong><small>Development metrics only. Not diagnosis.</small></div></aside><main className="analytics-main"><div className="analytics-heading"><div><p className="control-kicker">Protected model workspace · read-only</p><h2>Performance overview</h2><p className="control-copy">Compare training, validation, test behavior, municipality trends, and sample breakdowns.</p></div><span className="analytics-status">● MODEL RUN VERIFIED</span></div><div className="analytics-grid"><Chart title="R² by model and split" metricIndex={0} yTitle="R²" /><Chart title="MAE by model and split" metricIndex={1} yTitle="MAE" /><Chart title="RMSE by model and split" metricIndex={2} yTitle="RMSE" /></div><div className="analytics-wide"><LineChart /><div><p className="control-kicker">How to read this</p><h2>Generalization signal</h2><p>Small gaps suggest stable behavior across unseen periods; larger gaps signal uncertainty.</p><div className="analytics-legend"><span><i className="legend-mlr" /> MLR</span><span><i className="legend-lstm" /> LSTM</span><span><i className="legend-hybrid" /> Hybrid</span></div></div></div><HistoricalTrends /><p className="historical-warning">Development-model metrics and sample records only. No mode-of-transmission field exists in supplied data; do not infer one.</p></main></section>
+}
+
+function Chart({ title, metricIndex, yTitle }: { title: string; metricIndex: number; yTitle: string }) {
+  return <article className="analytics-chart"><h2>{title}</h2><div ref={(node) => { if (node) void Plotly.react(node, Object.entries(metrics).map(([model, splits]) => ({ x: ['Train', 'Validation', 'Test'], y: [splits.train[metricIndex], splits.validation[metricIndex], splits.test[metricIndex]], type: 'bar', name: model })), { barmode: 'group', paper_bgcolor: '#17191c', plot_bgcolor: '#17191c', font: { color: '#dce5e8' }, margin: { t: 10, r: 15, b: 45, l: 50 }, yaxis: { title: { text: yTitle }, gridcolor: '#30363d' }, legend: { orientation: 'h' } }, { responsive: true, displaylogo: false }) }} /></article>
+}
+
+function LineChart() {
+  return <article className="analytics-chart analytics-line"><h2>R² stability across evaluation splits</h2><div ref={(node) => { if (node) void Plotly.react(node, Object.entries(metrics).map(([model, splits]) => ({ x: ['Train', 'Validation', 'Test'], y: [splits.train[0], splits.validation[0], splits.test[0]], type: 'scatter', mode: 'lines+markers', name: model, line: { width: 3 } })), { paper_bgcolor: '#17191c', plot_bgcolor: '#17191c', font: { color: '#dce5e8' }, margin: { t: 10, r: 20, b: 45, l: 50 }, yaxis: { title: { text: 'R²' }, range: [0.85, 1], gridcolor: '#30363d' }, xaxis: { gridcolor: '#30363d' }, legend: { orientation: 'h' } }, { responsive: true, displaylogo: false }) }} /></article>
+}

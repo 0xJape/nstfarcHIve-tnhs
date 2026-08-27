@@ -396,17 +396,44 @@ class Handler(BaseHTTPRequestHandler):
                 return
             if path in ("/api/historical-trend", "/api/public/historical-cases"):
                 source = ROOT / "data" / "arcHIVe_Municipality_Monthly.csv"
-                yearly: dict[str, float] = {}
-                reported: dict[str, float] = {}
+                psgc = first(query, "psgc")
+                yearly: dict[str, dict[str, object]] = {}
                 with source.open(newline="", encoding="latin-1") as stream:
                     for row in csv.DictReader(stream):
-                        if row.get("Current_Region_XII") != "Yes":
+                        if row.get("Current_Region_XII") != "Yes" or (psgc and row.get("PSGC_Code") != psgc):
                             continue
                         year = row.get("Year", "").strip()
                         if year:
-                            yearly[year] = max(yearly.get(year, 0), float(row.get("Rolling_12M_Cases") or 0))
-                            reported[year] = reported.get(year, 0) + float(row.get("Reported_HIV_Cases") or 0)
-                self.send_json([{"PERIOD": year, "REPORTED_HIV_CASES": reported.get(year, 0), "ROLLING_12M_CASES": yearly[year], "SOURCE": "historical aggregate records"} for year in sorted(yearly)])
+                            item = yearly.setdefault(year, {"PERIOD": year, "PSGC": psgc or "REGION_XII", "LOCATION": row.get("Location") if psgc else "Region XII", "PROVINCE": row.get("Province") if psgc else "Region XII", "REPORTED_HIV_CASES": 0.0, "ROLLING_12M_CASES": 0.0, "CASES_PER_100K": 0.0, "SIX_MONTH_GROWTH_PCT": 0.0, "ACTIVE_TESTING_CENTERS": 0.0, "FACILITY_NEED_SCORE": 0.0, "months": 0})
+                            item["REPORTED_HIV_CASES"] = float(item["REPORTED_HIV_CASES"]) + float(row.get("Reported_HIV_Cases") or 0)
+                            item["ROLLING_12M_CASES"] = max(float(item["ROLLING_12M_CASES"]), float(row.get("Rolling_12M_Cases") or 0))
+                            item["CASES_PER_100K"] = float(item["CASES_PER_100K"]) + float(row.get("Cases_per_100k_Monthly") or 0)
+                            item["SIX_MONTH_GROWTH_PCT"] = float(item["SIX_MONTH_GROWTH_PCT"]) + float(row.get("Six_Month_Growth_pct") or 0)
+                            item["ACTIVE_TESTING_CENTERS"] = max(float(item["ACTIVE_TESTING_CENTERS"]), float(row.get("Active_Testing_Centers") or 0))
+                            item["FACILITY_NEED_SCORE"] = float(item["FACILITY_NEED_SCORE"]) + float(row.get("Facility_Need_Score") or 0)
+                            item["months"] = int(item["months"]) + 1
+                result = []
+                for year in sorted(yearly):
+                    item = yearly[year]
+                    months = max(1, int(item.pop("months")))
+                    item["CASES_PER_100K"] = float(item["CASES_PER_100K"]) / months
+                    item["SIX_MONTH_GROWTH_PCT"] = float(item["SIX_MONTH_GROWTH_PCT"]) / months
+                    item["FACILITY_NEED_SCORE"] = float(item["FACILITY_NEED_SCORE"]) / months
+                    item["SOURCE"] = "Constrained development simulation; not official municipality surveillance"
+                    result.append(item)
+                self.send_json(result)
+                return
+            if path == "/api/public/hiv-sample":
+                source = ROOT / "data" / "hiv_sample_clean.csv"
+                municipality = first(query, "municipality")
+                grouped: dict[tuple[str, str], int] = {}
+                with source.open(newline="", encoding="utf-8") as stream:
+                    for row in csv.DictReader(stream):
+                        if municipality and row.get("MUNICIPALITY") != municipality:
+                            continue
+                        year, category = row.get("YEAR OF INFECTION", "").strip(), row.get(first(query, "group") or "AGE BRACKET", "").strip()
+                        if year and category: grouped[(year, category)] = grouped.get((year, category), 0) + 1
+                self.send_json([{"YEAR": year, "CATEGORY": category, "CASES": cases, "SOURCE": "Development sample data; not official surveillance"} for (year, category), cases in sorted(grouped.items())])
                 return
             if path == "/api/municipalities":
                 self.send_json(self.query("SELECT * FROM municipalities ORDER BY PROVINCE, LOCATION"))
