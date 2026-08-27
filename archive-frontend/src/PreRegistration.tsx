@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { CheckCircle2, ChevronLeft, ChevronRight, Clock3, LockKeyhole, Mail, MapPin, MessageCircleHeart, Phone, Users } from 'lucide-react'
+import { CheckCircle2, ChevronLeft, ChevronRight, Clock3, LockKeyhole, Mail, MapPin, MessageCircleHeart, Phone, Users, X } from 'lucide-react'
 import { divIcon, latLngBounds } from 'leaflet'
 import { GeoJSON, MapContainer, Marker, Popup, TileLayer, Tooltip, useMap } from 'react-leaflet'
 import { api, type Facility, type Municipality, type MunicipalityGeometry } from './api'
@@ -106,7 +106,7 @@ export default function PreRegistration({ onSubmitted, onClose }: { onSubmitted?
   return <div className="care-workflow">
     <div className="care-workflow-map">
       <MapContainer center={[6.55, 124.85]} zoom={8} scrollWheelZoom>
-        <TileLayer attribution='&copy; <a href="https://carto.com/attributions">CARTO</a>' url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" subdomains="abcd" />
+        <TileLayer attribution='Tiles &copy; <a href="https://www.esri.com/">Esri</a> — Esri, DeLorme, NAVTEQ' url="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}" />
         {geometry && <GeoJSON data={geometry} style={{ color: '#ff5a61', weight: 1.4, opacity: 0.9, fillOpacity: 0.03 }} />}
         <FitCareCenters facilities={facilities} />
         {facilities.filter((facility) => Number.isFinite(facility.latitude) && Number.isFinite(facility.longitude)).map((facility) =>
@@ -118,7 +118,7 @@ export default function PreRegistration({ onSubmitted, onClose }: { onSubmitted?
       </MapContainer>
       {!facilities.length && <div className="care-map-empty"><strong>Testing-center locations coming soon</strong><small>Verified center data will appear here.</small></div>}
     </div>
-    <div className="care-workflow-panel">
+    <div className="care-workflow-panel"><button type="button" className="care-workflow-close" onClick={onClose} aria-label="Close testing centers"><X size={20} /></button>
       <div className="care-workflow-intro"><span className="care-request-icon"><MessageCircleHeart size={24} /></span><p className="eyebrow">Private care navigation</p><h2>We are here to help.</h2><p>You can take this one step at a time. No name, diagnosis, or HIV status needed.</p><div className="care-request-points"><span><LockKeyhole size={16} />Private and limited-use information</span><span><Clock3 size={16} />About 1 minute to complete</span></div></div>
       <div className="care-steps"><span className={step === 1 ? 'active' : ''}>1 Center</span><span className={step === 2 ? 'active' : ''}>2 Contact</span><span className={step === 3 ? 'active' : ''}>3 Consent</span></div>
       {error && <p className="login-error">{error}</p>}

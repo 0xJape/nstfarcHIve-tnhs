@@ -51,6 +51,7 @@ export default function AdminDashboard({ geometry, rows, ranking, alerts, summar
   const [detailDecomposition, setDetailDecomposition] = useState<MunicipalityDecomposition[]>([])
   const [detailCompartments, setDetailCompartments] = useState<MunicipalityCompartments[]>([])
   const [detailLoading, setDetailLoading] = useState(false)
+  const [search, setSearch] = useState('')
   const openDetail = async (row: SnapshotRow) => {
     setDetailLoading(true)
     setDetailOpen(true)
@@ -93,7 +94,7 @@ export default function AdminDashboard({ geometry, rows, ranking, alerts, summar
     </aside>
 
     <main className="control-map">
-      <div className="control-search"><Search size={16} /><input aria-label="Search municipality" placeholder="Search municipality" /></div>
+      <div className="control-search"><Search size={16} /><input aria-label="Search municipality" placeholder="Search municipality" value={search} onChange={(event) => setSearch(event.target.value)} onKeyDown={(event) => { if (event.key !== 'Enter') return; const query = search.trim().toLowerCase(); const match = rows.find((row) => `${row.LOCATION} ${row.PROVINCE}`.toLowerCase().includes(query)); if (match) { onSelect(match); setSearch(match.LOCATION) } }} /><button type="button" aria-label="Find municipality" onClick={() => { const query = search.trim().toLowerCase(); const match = rows.find((row) => `${row.LOCATION} ${row.PROVINCE}`.toLowerCase().includes(query)); if (match) { onSelect(match); setSearch(match.LOCATION) } }}>Find</button></div>
       <button className="control-layers" onClick={() => { const index = metricOptions.findIndex((option) => option.value === metric); onMetricChange(metricOptions[(index + 1) % metricOptions.length].value) }} aria-label="Toggle map layer"><Layers3 size={16} /><span>{metricOptions.find((option) => option.value === metric)?.label ?? 'Map layer'}</span></button>
       {geometry && rows.length ? <MapView geometry={geometry} rows={rows} metric={metric} overlayMetrics={overlayMetrics} showChoropleth={showChoropleth} showFacilities={showFacilities} selectedPsgc={selected?.PSGC} onSelect={selectMapRow} /> : <div className="control-map-empty">Map data unavailable</div>}
       <div className="control-timeline"><button aria-label="Previous month" onClick={() => movePeriod(-1)}><ChevronLeft size={18} /></button><div><span>Model period {currentPeriod || '—'}</span><input type="range" min="0" max={Math.max(0, periods.length - 1)} value={timeline} onChange={(event) => onPeriodChange(periods[Number(event.target.value)] ?? currentPeriod)} aria-label="Forecast timeline" /></div><button aria-label={playing ? 'Pause timeline' : 'Play timeline'} onClick={() => setPlaying((value) => !value)}>{playing ? <Pause size={16} /> : <Play size={16} />}</button><button aria-label="Next month" onClick={() => movePeriod(1)}><ChevronRight size={18} /></button></div>
