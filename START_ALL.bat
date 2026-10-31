@@ -1,20 +1,51 @@
 @echo off
-setlocal
+setlocal EnableExtensions
 cd /d "%~dp0"
 
-echo Stopping existing ARCHIVE processes on ports 5173 and 8765...
+set "ROOT=%~dp0"
+set "BACKEND=%ROOT%arcHIVe-main"
+set "FRONTEND=%ROOT%archive-frontend"
+set "PYTHON=%ROOT%.venv-1\Scripts\python.exe"
+
+if not exist "%PYTHON%" (
+	echo ERROR: Python environment missing: "%PYTHON%"
+	pause
+	exit /b 1
+)
+if not exist "%BACKEND%\src\phase2_runtime_api.py" (
+	echo ERROR: Backend not found: "%BACKEND%"
+	pause
+	exit /b 1
+)
+if not exist "%FRONTEND%\package.json" (
+	echo ERROR: Frontend not found: "%FRONTEND%"
+	pause
+	exit /b 1
+)
+
+echo Stopping existing ARCHIVE services...
 for /f "tokens=5" %%P in ('netstat -ano ^| findstr ":5173 .*LISTENING"') do taskkill /PID %%P /F >nul 2>&1
 for /f "tokens=5" %%P in ('netstat -ano ^| findstr ":8765 .*LISTENING"') do taskkill /PID %%P /F >nul 2>&1
 
-echo Starting ARCHIVE backend...
-set "DATABASE_URL=postgresql://archive_app:gayojalelprince21@localhost:5432/archive"
-start "ARCHIVE API" /D "%~dp0arcHIVe-main" "%~dp0.venv-1\Scripts\python.exe" -m src.phase2_runtime_api --host 127.0.0.1 --port 8765 --cors-origin http://127.0.0.1:5173
+echo Starting backend API...
+start "ARCHIVE API" cmd /k "cd /d "%BACKEND%" && "%PYTHON%" -m src.phase2_runtime_api --host 127.0.0.1 --port 8765 --cors-origin http://127.0.0.1:5173"
 
-echo Starting ARCHIVE frontend...
-start "ARCHIVE Frontend" cmd /k "cd /d "%~dp0archive-frontend" && npm run dev -- --host 127.0.0.1 --port 5173"
+echo Waiting for backend health endpoint...
+for /l %%N in (1,1,20) do (
+	curl.exe -fsS http://127.0.0.1:8765/api/health >nul 2>&1 && goto backend_ready
+	timeout /t 1 /nobreak >nul
+)
+echo WARNING: Backend did not become ready. Check ARCHIVE API window.
 
+:backend_ready
+echo Backend ready: http://127.0.0.1:8765/api/health
+echo Starting frontend...
+start "ARCHIVE Frontend" cmd /k "cd /d "%FRONTEND%" && npm run dev -- --host 127.0.0.1 --port 5173"
+
+timeout /t 2 /nobreak >nul
+start "" http://127.0.0.1:5173
 echo.
-echo ARCHIVE services starting in separate windows.
+echo ARCHIVE started.
 echo Frontend: http://127.0.0.1:5173
 echo Backend:  http://127.0.0.1:8765/api/health
 exit /b 0

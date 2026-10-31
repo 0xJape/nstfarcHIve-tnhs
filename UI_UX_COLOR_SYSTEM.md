@@ -4,45 +4,45 @@
 
 ARCHIVE uses an awareness-focused visual system: compassionate, serious, accessible, and action-oriented. Red communicates HIV awareness and urgent action. Charcoal supports trust and professional decision-making. White space keeps health information readable and calm.
 
-Reference palette: **Awareness Crimson**.
+Reference palette: **Calm Teal**. Color must communicate care and clarity, never fear or diagnosis.
 
 ## Color Tokens
 
 | Token | Hex | Usage |
 |---|---|---|
-| `--awareness-red` | `#D71920` | Primary brand color, main buttons, highlights, HIV awareness elements |
-| `--deep-crimson` | `#A50F15` | Hover states, pressed states, accents, depth |
-| `--charcoal-black` | `#1A1A1A` | Navigation, dark sections, strong text emphasis |
+| `--calm-teal` | `#287F82` | Primary brand color, actions, links, supportive highlights |
+| `--deep-teal` | `#1F6268` | Hover states, pressed states, accents, depth |
+| `--slate` | `#203238` | Navigation, strong text emphasis, high-information surfaces |
 | `--pure-white` | `#FFFFFF` | Main page background, high-contrast surfaces |
-| `--soft-white` | `#F7F7F7` | Cards, secondary sections, dividers, muted surfaces |
-| `--dark-gray` | `#333333` | Body text, icons, secondary controls |
-| `--bright-accent-red` | `#EF233C` | Calls to action, interactive emphasis, alert highlights |
+| `--soft-mist` | `#F5F8F7` | Cards, secondary sections, dividers, muted surfaces |
+| `--muted-slate` | `#5F7074` | Body text, icons, secondary controls |
+| `--warm-amber` | `#E8B86A` | Focus indicator, time-sensitive emphasis, selected states |
 
 ## Semantic Tokens
 
 | Semantic role | Default token |
 |---|---|
-| Brand | `--awareness-red` |
-| Brand hover/active | `--deep-crimson` |
-| Primary action | `--awareness-red` |
-| Secondary action | `--charcoal-black` |
+| Brand | `--calm-teal` |
+| Brand hover/active | `--deep-teal` |
+| Primary action | `--calm-teal` |
+| Secondary action | `--slate` |
 | Page background | `--pure-white` |
-| Section background | `--soft-white` |
-| Primary text | `--charcoal-black` |
-| Secondary text | `--dark-gray` |
-| Critical alert | `--bright-accent-red` |
-| Focus indicator | `--bright-accent-red` |
+| Section background | `--soft-mist` |
+| Primary text | `--slate` |
+| Secondary text | `--muted-slate` |
+| Critical alert | Accessible red plus text/icon label |
+| Focus indicator | `--warm-amber` |
 
 ## Usage Rules
 
-- Use red for action and awareness, not as general page decoration.
-- Use `#1A1A1A` for navigation and high-information dashboard areas.
+- Use teal for action and trust, not as a risk verdict.
+- Use `#203238` for navigation and high-information dashboard areas.
 - Use white or soft white behind dense charts, tables, and health guidance.
 - Keep body text at strong contrast against its background.
 - Never communicate risk level through color alone; pair color with labels, icons, or patterns.
-- Reserve bright accent red for important actions, alerts, and selected states.
-- Use deep crimson for hover and pressed states, not as default body text.
-- Avoid large solid-red text blocks; they reduce readability and increase visual fatigue.
+- Reserve amber for focus, selected, or time-sensitive states.
+- Use deep teal for hover and pressed states, not as default body text.
+- Avoid large solid-red or alarm-colored text blocks; they increase stigma and visual fatigue.
 
 ## Core Components
 

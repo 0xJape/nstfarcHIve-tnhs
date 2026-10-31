@@ -42,6 +42,8 @@ CHAT_SYSTEM_PROMPT = """You are ARCHIVE Care Guide embedded inside the ARCHIVE R
 
 If asked what mathematical or forecasting model ARCHIVE uses, answer from these verified project facts: it uses a hybrid Multiple Linear Regression (MLR) and Long Short-Term Memory (LSTM) neural-network model to forecast monthly municipality reported HIV diagnoses, conditional on a regional monthly case total. Final prediction is weighted as 85% MLR plus 15% LSTM: forecast = 0.85 × MLR prediction + 0.15 × LSTM prediction. The saved model bundle reports test R² about 0.929 for the hybrid, but this is development-model performance, not proof of future accuracy. Phase 2 then combines forecasts with population-coupled care-cascade simulation, spatial neighbor effects, Getis-Ord Gi* hotspot analysis, transmission-pressure proxies, uncertainty, and testing-center planning through 2050. State clearly that outputs are aggregate planning scenarios, not official surveillance, individual risk estimates, or diagnoses.
 
+Language rule: if the user message starts with [Filipino], answer entirely in natural Filipino/Tagalog, including every bullet, final question, and care instructions. Do not answer in English except for unavoidable proper names such as ARCHIVE, HIV, MLR, or LSTM. If the user message starts with [English], answer in English. Never translate only part of the response.
+
 Response format: start with one direct sentence. Then use 2-4 short bullet points beginning with “•” when steps or choices help. End with one brief next action or question. Stay under 90 words unless emergency guidance requires more. Avoid greetings, repetition, medical jargon, long disclaimers, and markdown headings. For unrelated requests, briefly redirect to HIV or ARCHIVE guidance. If immediate danger or emergency symptoms are mentioned, advise local emergency services or urgent clinical care."""
 
 def groq_chat(message: str, history: list[dict[str, str]]) -> str:
@@ -222,6 +224,8 @@ class Handler(BaseHTTPRequestHandler):
                 channel = str(payload.get("preferred_channel", "")); email = str(payload.get("email", "")).strip()[:254]; phone = str(payload.get("phone", "")).strip()[:40]
                 contact = email or phone
                 if not municipality or channel not in {"email", "sms"} or not contact or payload.get("consent") is not True: raise ValueError("Municipality, contact, channel, and consent are required")
+                if channel == "email" and not email: raise ValueError("Email is required for email contact")
+                if channel == "sms" and not phone: raise ValueError("Phone is required for SMS contact")
                 if email and ("@" not in email or len(email) < 5): raise ValueError("Invalid email")
                 if phone and len(phone) < 7: raise ValueError("Invalid phone number")
                 self.send_json(create_pre_registration({"municipality": municipality, "preferred_channel": channel, "contact_value": contact, "email": email, "phone": phone, "facility_code": str(payload["facility_code"])}), status=201)
@@ -244,7 +248,9 @@ class Handler(BaseHTTPRequestHandler):
                 decision = str(payload.get("decision", ""))
                 if decision not in {"accept", "reject"}: raise ValueError("Decision must be accept or reject")
                 reference_code = unquote(path.split("/api/admin/pre-registrations/", 1)[1].removesuffix("/review"))
-                self.send_json(review_pre_registration(reference_code, decision, actor))
+                result = review_pre_registration(reference_code, decision, actor)
+                if decision == "accept": result["delivery"] = dispatch_webhook_outbox()
+                self.send_json(result)
             except (TypeError, ValueError, json.JSONDecodeError) as exc: self.send_json({"error": str(exc)}, status=400)
             return
         if path.startswith("/api/admin/pre-registrations/") and path.endswith("/delete"):
@@ -380,6 +386,15 @@ class Handler(BaseHTTPRequestHandler):
             if path == "/api/public/facilities":
                 if not operational_db_ready(): self.send_json({"error": "Operational database unavailable"}, status=503); return
                 self.send_json(list_public_facilities())
+                return
+            if path == "/api/public/interventions":
+                self.send_json([
+                    {"id": "counseling-course-2026", "start": "2026-04-24", "end": "2026-04-27", "title": "Training on Counseling Course for Frontline Health Workers", "description": "Enhance participants’ knowledge, skills, and attitude in providing pre- and post-test HIV counseling at health facilities.", "target": "HTF Staff · Target pax: 35", "status": "Conducted", "province": "Regionwide", "municipality": "General Santos City", "type": "Healthcare Capacity Building & Training", "organization": "DOH CHD XII"},
+                    {"id": "candlelight-memorial-2026", "start": "2026-05-19", "end": "2026-05-19", "title": "International AIDS Candlelight Memorial", "description": "Promote awareness on prevention and control of STI, HIV, and AIDS among young people through health education and information.", "target": "General population · Target pax: 50", "status": "Conducted", "province": "Regionwide", "municipality": "Isulan, Sultan Kudarat; General Santos City; Kidapawan City; Alabel; Koronadal City", "type": "Community Awareness & Stigma Reduction", "organization": "DOH, PHO"},
+                    {"id": "transhealth-workshop-2026", "start": "2026-09-09", "end": "2026-09-10", "title": "Transhealth Consultation Workshop", "description": "Strengthen LGBTQIA community leaders as advocates and referral focal persons for gender-affirming and inclusive healthcare services.", "target": "LGBTQIA community leaders · Doctors · Target pax: 35", "status": "Conducted", "province": "Regionwide", "municipality": "General Santos City", "type": "Community and healthcare consultation", "organization": "DOH, SHIP"},
+                    {"id": "primary-care-training-2026", "start": "2026-09-23", "end": "2026-09-25", "title": "Training on HIV Primary Care Management", "description": "Strengthen primary healthcare providers’ competencies in comprehensive, evidence-based, person-centered HIV prevention, diagnosis, treatment, retention, and long-term care.", "target": "HTF Staff · Target pax: 35", "status": "Conducted", "province": "Regionwide", "municipality": "General Santos City", "type": "Healthcare Capacity Building & Training", "organization": "DOH"},
+                    {"id": "testing-symposium-2026", "start": "2026-10-01", "end": "2026-12-31", "title": "Conduct of HIV Testing and Symposium", "description": "Regional HIV testing and symposium activities for community awareness, prevention, and referral to care.", "target": "General population, including MSM", "status": "Scheduled", "province": "Regionwide", "municipality": "Regionwide", "type": "Community Awareness & Stigma Reduction", "organization": "DOH, SHIP"},
+                ])
                 return
             if path == "/api/admin/pre-registrations":
                 if not self.require_auth(): return

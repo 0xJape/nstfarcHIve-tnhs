@@ -1,8 +1,6 @@
 @echo off
 setlocal EnableExtensions
 cd /d "%~dp0"
-set "ARCHIVE_ADMIN_USERNAME=archive1hiv"
-set "ARCHIVE_ADMIN_PASSWORD=hivprotect"
 set "PYTHON_EXE=%LOCALAPPDATA%\arcHIVe\py314\Scripts\python.exe"
 if not exist "%PYTHON_EXE%" goto :failed
 "%PYTHON_EXE%" -c "import psycopg" >nul 2>&1

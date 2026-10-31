@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="light" />
+<meta name="description" content="ARCHIVE's friendly, stigma-free HIV education resource: HIV basics, testing, prevention, PrEP and PEP, treatment and U=U, and respect and support." />
+<title>HIV Education | ARCHIVE</title>
+<style>
+  :root { --navy:#17324D; --deep:#102b42; --teal:#217d75; --teal-strong:#17675f; --mint:#DDF3EF; --mint-2:#eef9f6; --cream:#FAF9F6; --sand:#F1E9DD; --slate:#52616B; --ink:#243847; --line:#dfe7e5; --white:#ffffff; --shadow:0 11px 33px rgba(23,50,77,.062); --radius:19px; }
+  * { box-sizing:border-box; }
+  html {scroll-behavior:smooth;scroll-padding-top:90px;}
+  body { margin:0; font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif; background:var(--cream); color:var(--ink); line-height:1.59; }
+  a {color:var(--teal-strong);text-underline-offset:3px;} a:hover {color:#124a46;} a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #d79137;outline-offset:3px;}
+  button,input {font:inherit;} .shell{display:grid;grid-template-columns:246px minmax(0,1fr);min-height:100vh;}
+  .sidebar{background:var(--deep);color:#f2f8fb;padding:32px 20px 24px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:30px;}
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:white;}
+  .brand-mark{height:43px;width:43px;display:grid;place-items:center;background:linear-gradient(135deg,#2eaba0,#5cceb3);border-radius:13px;flex:none;box-shadow:0 4px 15px rgba(0,0,0,.18)}
+  .brand-name{font-size:24px;font-weight:850;letter-spacing:.4px;line-height:1.05}.brand-caption{display:block;color:#b9d5dc;font-size:10px;letter-spacing:.05em;margin-top:5px}
+  .nav-label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#9eb5c5;margin-bottom:10px;margin-left:13px;font-weight:750;}
+  .nav{display:grid;gap:6px}.nav a{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;color:#d5e4ec;font-weight:650;font-size:13px;text-decoration:none;transition:background .2s,color .2s;}
+  .nav a:hover{background:#21445b;color:#fff}.nav a.active{color:#fff;background:linear-gradient(100deg,#1c807d,#276f7e);}.nav .glyph{font-size:17px;width:20px;text-align:center;line-height:1}
+  .side-footer{margin-top:auto;padding:19px 14px;border-top:1px solid #365067;color:#a9c9ce;font-size:12px;line-height:1.65}.side-footer strong{color:#dbf3ec;display:block;font-size:14px;margin-bottom:4px}
+  .main{min-width:0;}.topbar{min-height:75px;background:rgba(255,255,255,.89);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:14px;padding:15px clamp(18px,3.2vw,45px);}
+  .breadcrumb{font-size:13px;color:var(--slate);}.breadcrumb strong{color:var(--navy)}
+  .top-pill{display:inline-flex;align-items:center;gap:7px;padding:8px 13px;border:1px solid #d3e5e2;border-radius:99px;color:var(--teal-strong);background:#f0f9f7;font-size:12px;font-weight:700}
+  .content{max-width:1240px;margin:auto;padding:26px clamp(18px,3.2vw,45px) 55px;}
+  .hero{position:relative;background:linear-gradient(120deg,#dbf1eb 0%,#eff8f2 62%,#f5f1e7 100%);border:1px solid #d8e9e4;min-height:293px;border-radius:24px;padding:clamp(24px,4vw,44px);display:grid;grid-template-columns:minmax(0,1.35fr) minmax(220px,.7fr);gap:12px;align-items:center;overflow:hidden;}
+  .eyebrow{color:#26746e;font-size:11px;font-weight:850;letter-spacing:.17em;text-transform:uppercase;margin:0 0 10px}.hero h1{color:var(--navy);font-size:clamp(32px,3.8vw,50px);line-height:1.11;letter-spacing:-.038em;margin:0 0 13px;max-width:650px;}
+  .hero p.lead{font-size:15px;color:#38596a;max-width:630px;margin:0 0 18px;line-height:1.7}.hero-pills{display:flex;flex-wrap:wrap;gap:8px}.hero-pills span{border-radius:99px;padding:6px 10px;background:rgba(255,255,255,.73);border:1px solid #d3e7df;color:#345e5b;font-size:11px;font-weight:720;}
+  .hero-art{display:grid;place-items:center;min-width:0;}.hero-art svg{width:100%;max-width:315px;height:auto;overflow:visible;}
+  .urgent{margin-top:18px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:15px;background:#fff9eb;border:1px solid #ecd9ae;border-radius:16px;padding:17px 19px;}
+  .urgent-symbol{display:grid;place-items:center;background:#f6e4be;border-radius:12px;width:43px;height:43px;font-size:21px;}.urgent strong{display:block;color:#684d20;font-size:14px;margin-bottom:2px}.urgent p{color:#695a3e;font-size:13px;margin:0}.urgent .inline-link{white-space:nowrap;font-weight:800;color:#795714;font-size:12px;}
+  .section-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin:32px 0 16px}.section-head h2{margin:0;font-size:23px;letter-spacing:-.025em;color:var(--navy)}.section-head p{margin:3px 0 0;color:var(--slate);font-size:13px;}.tag{font-size:11px;font-weight:780;letter-spacing:.07em;text-transform:uppercase;color:var(--teal-strong);}
+  .tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:16px}.search-wrap{min-width:230px;flex:1;position:relative;}.search-wrap .lens{position:absolute;left:16px;top:12px;font-size:17px;opacity:.7}.search-wrap input{width:100%;padding:12px 15px 12px 45px;border:1px solid #dce5e4;border-radius:12px;background:#fff;color:var(--navy);outline-offset:3px;font-size:13px;box-shadow:0 3px 10px rgba(20,45,60,.02)}
+  .clear{border:1px solid #dce5e4;border-radius:11px;padding:10px 15px;background:#fff;color:#38566a;cursor:pointer;font-weight:720;font-size:12px;}.clear:hover{background:#edf8f5}
+  .count{color:#59727d;font-size:12px;font-weight:700;white-space:nowrap;}
+  .topic-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
+  .topic-card{border:1px solid #e1e9e6;background:#fff;border-radius:18px;box-shadow:var(--shadow);padding:22px;display:flex;flex-direction:column;gap:10px;min-height:225px;transition:transform .2s,box-shadow .2s;}.topic-card:hover{transform:translateY(-2px);box-shadow:0 16px 35px rgba(23,50,77,.09)}
+  .icon-frame{width:53px;height:53px;display:grid;place-items:center;border-radius:16px;font-size:28px;background:#e2f4ef;}.topic-card:nth-child(2) .icon-frame,.topic-card:nth-child(5) .icon-frame{background:#e8f0f8}.topic-card:nth-child(3) .icon-frame,.topic-card:nth-child(6) .icon-frame{background:#f6eee1}
+  .topic-card h3{font-size:17px;color:var(--navy);line-height:1.3;margin:2px 0 0}.topic-card p{font-size:12.5px;color:var(--slate);margin:0;line-height:1.65;flex:1}.topic-link{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:800;text-decoration:none;margin-top:6px}.topic-link:hover{text-decoration:underline;}
+  .empty{display:none;text-align:center;border:1px dashed #afc4c4;background:white;border-radius:15px;padding:25px;color:#56707a;margin-top:12px}
+  .detailed{margin-top:38px}.divider-label{font-size:11px;letter-spacing:.17em;color:var(--teal-strong);font-weight:850;text-transform:uppercase;}
+  .detail{background:#fff;border:1px solid #e1e8e5;border-radius:20px;margin:15px 0;padding:27px 28px;box-shadow:var(--shadow);scroll-margin-top:24px;}
+  .detail-title{display:flex;align-items:center;gap:14px;margin-bottom:11px}.detail-title .mini{font-size:29px;background:var(--mint-2);height:54px;width:54px;border-radius:15px;display:grid;place-items:center;flex:none}.detail h3{color:var(--navy);font-size:22px;line-height:1.2;letter-spacing:-.018em;margin:0}.detail .intro{font-size:14px;color:#3f5968;line-height:1.76;margin:12px 0 17px;}
+  .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.info-box{background:#f5f8f7;border-radius:13px;padding:17px 20px;min-width:0}.info-box.warm{background:#f9f4ea}.info-box.blue{background:#f0f5fa}.info-box h4{margin:0 0 9px;font-size:13px;color:var(--navy)}.info-box p{font-size:13px;color:#52636c;margin:0}.info-box ul{margin:0;padding-left:19px;font-size:13px;color:#465e69}.info-box li{margin:5px 0;line-height:1.55}.small-note{border-left:3px solid #2e9b91;padding:7px 13px;background:#f3faf7;border-radius:0 9px 9px 0;font-size:12.5px;color:#415e62;margin:16px 0 0}
+  .source-row{border-top:1px solid #edf1ee;margin-top:18px;padding-top:13px;display:flex;flex-wrap:wrap;align-items:center;gap:8px}.source-label{font-size:11px;font-weight:850;letter-spacing:.03em;color:#577078;margin-right:2px}.source-link{border:1px solid #c7e2db;border-radius:99px;padding:5px 10px;text-decoration:none;font-size:11px;font-weight:750;color:#156760;background:#f5fbf8;}.source-link:hover{background:#e4f3ee}
+  .rights-banner{margin-top:18px;display:flex;align-items:center;gap:17px;background:linear-gradient(115deg,#183750,#214858);color:#fff;border-radius:20px;padding:25px 27px}.rights-banner .hand{font-size:38px;background:#326a6b;border-radius:16px;height:65px;width:65px;display:grid;place-items:center;flex:none}.rights-banner h3{color:#fff;margin:0 0 5px;font-size:20px}.rights-banner p{color:#dbeced;margin:0 0 6px;font-size:13px}.rights-banner a{color:#b5f4e6;font-size:12px;font-weight:750}
+  .footer{border-top:1px solid #dce7e1;margin-top:30px;padding-top:22px;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;color:#60717a;font-size:11.5px}.footer strong{color:var(--navy)}.footer p{margin:4px 0 0;max-width:700px}
+  .skip{position:absolute;top:-100px;left:12px;background:white;z-index:1000;padding:9px 15px;border:2px solid var(--teal);}.skip:focus{top:10px}
+  @media(max-width:1060px){.shell{grid-template-columns:208px minmax(0,1fr)}.sidebar{padding:25px 14px}.brand-name{font-size:21px}.topic-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{grid-template-columns:minmax(0,1fr) 195px}.hero h1{font-size:35px}}
+  @media(max-width:740px){.shell{display:block}.sidebar{position:static;height:auto;flex-direction:row;align-items:center;justify-content:space-between;padding:15px 18px;gap:10px}.sidebar .nav,.sidebar .nav-label,.side-footer{display:none}.sidebar .brand-mark{height:35px;width:35px}.brand-name{font-size:20px}.brand-caption{font-size:9px}.sidebar:after{content:'EDUCATION';font-size:10px;font-weight:850;letter-spacing:.12em;color:#bfe7df}.topbar{min-height:60px;padding:11px 18px}.content{padding:17px 15px 45px}.hero{display:block;padding:27px 24px}.hero h1{font-size:35px;max-width:450px}.hero-art{position:absolute;right:-38px;bottom:-60px;width:155px;opacity:.16;pointer-events:none}.hero p.lead,.hero-pills{position:relative;z-index:1}.urgent{grid-template-columns:auto 1fr}.urgent .inline-link{grid-column:2;white-space:normal}.topic-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.topic-card{min-height:218px;padding:16px}.detail{padding:21px 17px}.detail-grid{grid-template-columns:1fr}.section-head{margin-top:27px}.section-head h2{font-size:21px}}
+  @media(max-width:460px){.topic-grid{grid-template-columns:1fr}.topic-card{min-height:0}.hero h1{font-size:31px}.top-pill{font-size:10px;padding:6px 9px}.rights-banner{align-items:flex-start;padding:19px}.rights-banner .hand{width:48px;height:48px;font-size:27px}.detail h3{font-size:20px}}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.topic-card{transition:none}}
+  @media print{.sidebar,.topbar,.tools,.urgent .inline-link{display:none!important}.shell{display:block}.content{max-width:none;padding:0}.topic-grid{grid-template-columns:repeat(3,1fr)}.hero,.detail,.topic-card{break-inside:avoid;box-shadow:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main-content">Skip to education content</a>
+<div class="shell">
+  <aside class="sidebar" aria-label="ARCHIVE navigation">
+    <a class="brand" href="#page-top" aria-label="ARCHIVE Education home">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" width="29" height="29"><rect x="4" y="18" width="6" height="10" rx="2" fill="#C8F5E8"/><rect x="13" y="11" width="6" height="17" rx="2" fill="#C8F5E8"/><rect x="22" y="4" width="6" height="24" rx="2" fill="#FFF"/></svg></span>
+      <span><span class="brand-name">ARCHIVE</span><span class="brand-caption">Understand. Prepare. Support.</span></span>
+    </a>
+    <div><div class="nav-label">Education center</div><nav class="nav" aria-label="Page topics">
+      <a class="active" href="#page-top"><span class="glyph" aria-hidden="true">⌂</span> Education home</a>
+      <a href="#basics"><span class="glyph" aria-hidden="true">◈</span> HIV basics</a>
+      <a href="#testing"><span class="glyph" aria-hidden="true">◉</span> Testing</a>
+      <a href="#prevention"><span class="glyph" aria-hidden="true">✦</span> Prevention</a>
+      <a href="#prep-pep"><span class="glyph" aria-hidden="true">✚</span> PrEP and PEP</a>
+      <a href="#treatment"><span class="glyph" aria-hidden="true">♡</span> Treatment and U=U</a>
+      <a href="#respect"><span class="glyph" aria-hidden="true">❀</span> Respect and support</a>
+    </nav></div>
+    <div class="side-footer"><strong>Knowledge without judgment.</strong>Information for everyone. No account or HIV-status disclosure is needed to use this page.</div>
+  </aside>
+  <div class="main" id="page-top">
+    <header class="topbar"><span class="breadcrumb">ARCHIVE / <strong>Education</strong></span><span class="top-pill">♧ &nbsp;Stigma-free information</span></header>
+    <main class="content" id="main-content">
+      <section class="hero" aria-labelledby="hero-heading">
+        <div><p class="eyebrow">Welcome to the education center</p><h1 id="hero-heading">Understanding HIV begins with facts.</h1>
+          <p class="lead">Explore clear, science-based information about HIV, testing, prevention, treatment, and living with dignity. You deserve knowledge and care without judgment.</p>
+          <div class="hero-pills"><span>✓ 6 essential topics</span><span>✓ Trusted health sources</span><span>✓ No sign-in needed</span></div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <svg viewBox="0 0 315 285" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="170" cy="236" rx="139" ry="25" fill="#c0dcd2" opacity=".45"/>
+            <circle cx="171" cy="127" r="108" fill="#c5e3d8" opacity=".6"/>
+            <path d="M81 242Q55 180 86 147Q110 177 81 242M80 242Q26 212 33 178Q72 191 80 242M258 248Q281 190 247 166Q232 199 258 248M258 247Q310 210 302 181Q270 193 258 247" fill="#74b39a" opacity=".79"/>
+            <path d="M80 242L87 174M258 247L252 189" stroke="#3c8879" stroke-width="3" stroke-linecap="round"/>
+            <rect x="88" y="121" rx="19" width="168" height="122" fill="#fffdf8" stroke="#e6ece5" stroke-width="2"/>
+            <path d="M148 122v122" stroke="#e5ede6" stroke-width="2"/>
+            <path d="M161 172c0-20 29-21 29-3 0-18 29-17 29 3 0 18-29 36-29 36s-29-18-29-36z" fill="#2a9d8f"/>
+            <circle cx="119" cy="150" r="13" fill="#d7b29b"/><path d="M100 212v-29c0-15 37-15 37 0v29" fill="#e9a976"/>
+            <circle cx="160" cy="145" r="12" fill="#946f5c"/><path d="M142 185c0-15 36-15 36 0v23h-36" fill="#224e66"/>
+            <circle cx="213" cy="149" r="13" fill="#bb937f"/><path d="M194 209v-26c0-15 38-15 38 0v26" fill="#91b4aa"/>
+            <path d="M99 218q48 14 95 0q23-8 45 0" fill="none" stroke="#a2cfc2" stroke-width="6" stroke-linecap="round"/>
+            <circle cx="274" cy="95" r="24" fill="#fff6dd"/><path d="M263 94h22m-11-11v22" stroke="#e8b75d" stroke-width="4" stroke-linecap="round"/>
+            <path d="M69 74c-20-14-36 17-11 29l14 7 13-18c13-22-10-30-16-18z" fill="#2b9b90" opacity=".65"/>
+          </svg>
+        </div>
+      </section>
+      <aside class="urgent" aria-label="Urgent information about PEP">
+        <span class="urgent-symbol" aria-hidden="true">⏱️</span>
+        <div><strong>Possible HIV exposure in the last 72 hours?</strong><p>Seek medical care as soon as possible to ask whether emergency PEP is appropriate. Every hour matters; don't wait to book a routine appointment.</p></div>
+        <a class="inline-link" href="https://www.cdc.gov/stophivtogether/hiv-prevention/pep.html" target="_blank" rel="noopener noreferrer">Learn about PEP ↗</a>
+      </aside>
+      <section aria-labelledby="topics-title">
+        <div class="section-head"><div><h2 id="topics-title">Explore the essentials</h2><p>Start wherever you feel comfortable. No question is too small.</p></div><span class="tag">Learn at your pace</span></div>
+        <div class="tools"><label for="search" class="search-wrap"><span class="lens" aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Search topics: testing, U=U, prevention…" autocomplete="off" aria-label="Search HIV education topics"></label><button class="clear" type="button" id="clear-search">Clear search</button><span id="result-count" class="count" role="status" aria-live="polite">6 topics</span></div>
+        <div class="topic-grid" id="topic-grid">
+          <article class="topic-card" data-search="hiv basics immune system transmission hugging sharing food toilets mosquitoes myths"><div class="icon-frame" aria-hidden="true">🧬</div><h3>HIV basics</h3><p>Understand what HIV is, how it affects immunity, and how everyday contact does not spread the virus.</p><a href="#basics" class="topic-link">Read topic <span aria-hidden="true">↗</span></a></article>
+          <article class="topic-card" data-search="testing diagnosis confidential test early care window period negative result"><div class="icon-frame" aria-hidden="true">🧪</div><h3>Testing</h3><p>Learn when to test, what a result means, and why test timing and follow-up matter.</p><a href="#testing" class="topic-link">Read topic <span aria-hidden="true">↗</span></a></article>
+          <article class="topic-card" data-search="prevention condoms regular testing prep sterile needles syringes treatment"><div class="icon-frame" aria-hidden="true">🛡️</div><h3>Prevention</h3><p>Explore practical ways to prevent HIV, with choices tailored to different situations.</p><a href="#prevention" class="topic-link">Read topic <span aria-hidden="true">↗</span></a></article>
+          <article class="topic-card" data-search="prep pep prophylaxis before after exposure 72 hours emergency medicine"><div class="icon-frame" aria-hidden="true">💊</div><h3>PrEP and PEP</h3><p>Know the difference between ongoing prevention and medication after a possible exposure.</p><a href="#prep-pep" class="topic-link">Read topic <span aria-hidden="true">↗</span></a></article>
+          <article class="topic-card" data-search="treatment viral load ART antiretroviral undetectable untransmittable U=U sexual transmission"><div class="icon-frame" aria-hidden="true">💚</div><h3>Treatment &amp; U=U</h3><p>See how HIV treatment protects health and what undetectable means for sexual transmission.</p><a href="#treatment" class="topic-link">Read topic <span aria-hidden="true">↗</span></a></article>
+          <article class="topic-card" data-search="respect support rights privacy consent confidentiality stigma discrimination Philippines RA 11166"><div class="icon-frame" aria-hidden="true">🤝</div><h3>Respect &amp; support</h3><p>Your status does not define you. Learn about dignity, confidentiality, and rights in the Philippines.</p><a href="#respect" class="topic-link">Read topic <span aria-hidden="true">↗</span></a></article>
+        </div>
+        <p class="empty" id="no-results">No matching topics yet. Try “testing,” “PrEP,” “treatment,” or “rights.”</p>
+      </section>
+      <section class="detailed" aria-labelledby="learn-title"><span class="divider-label">Helpful explanations</span><div class="section-head" style="margin-top:3px"><div><h2 id="learn-title">The essentials, explained</h2><p>Short information blocks with links to reliable sources.</p></div></div>
+        <article class="detail" id="basics">
+          <div class="detail-title"><span class="mini" aria-hidden="true">🧬</span><h3>01. HIV basics</h3></div>
+          <p class="intro"><strong>HIV (human immunodeficiency virus)</strong> is a virus that attacks the body's immune system. Without treatment it can gradually weaken the body's ability to fight infections. HIV is not the same as AIDS: AIDS is the most advanced stage of untreated HIV infection. With effective treatment, people living with HIV can live long, healthy lives.</p>
+          <div class="detail-grid"><div class="info-box"><h4>HIV can spread through certain body fluids</h4><ul><li>Blood and some sexual fluids, when they enter the body through routes that allow transmission.</li><li>Sharing needles or other injecting equipment.</li><li>From parent to baby during pregnancy, delivery, or breastfeeding without appropriate prevention and care.</li></ul></div>
+          <div class="info-box warm"><h4>HIV does NOT spread through everyday contact</h4><ul><li>Hugging or holding hands.</li><li>Sharing meals, dishes, or drinking glasses.</li><li>Using the same toilet or common spaces.</li><li>Mosquito bites or casual social contact.</li></ul></div></div>
+          <p class="small-note"><strong>Remember:</strong> People living with HIV deserve the same everyday warmth, friendship, and respect as everyone else.</p>
+          <div class="source-row"><span class="source-label">LEARN MORE</span><a class="source-link" href="https://www.who.int/news-room/fact-sheets/detail/hiv-aids" target="_blank" rel="noopener noreferrer">WHO: HIV and AIDS ↗</a><a class="source-link" href="https://www.hiv.gov/hiv-basics/overview/about-hiv-and-aids/how-is-hiv-transmitted" target="_blank" rel="noopener noreferrer">HIV.gov: Transmission ↗</a></div>
+        </article>
+        <article class="detail" id="testing">
+          <div class="detail-title"><span class="mini" aria-hidden="true">🧪</span><h3>02. Testing</h3></div>
+          <p class="intro">An HIV test is the only reliable way to know your HIV status. Many people have no symptoms. Testing can be done through health facilities and approved services, with counseling and follow-up care when needed. In the Philippines, HIV-related testing and information are protected by confidentiality provisions under RA 11166.</p>
+          <div class="detail-grid"><div class="info-box blue"><h4>What should you expect?</h4><ul><li>Ask a qualified provider which HIV test is suitable for you.</li><li>A reactive screening result may require confirmatory testing.</li><li>Early diagnosis and timely treatment can protect long-term health.</li></ul></div><div class="info-box"><h4>Understand the window period</h4><p>No HIV test can detect infection immediately after exposure. How soon HIV can be detected depends on the type of test. If you test too early and receive a negative result, you may need to test again after the relevant window period.</p></div></div>
+          <p class="small-note"><strong>Important:</strong> If there may have been a recent exposure, ask for urgent medical advice about PEP rather than waiting for a routine testing date.</p>
+          <div class="source-row"><span class="source-label">LEARN MORE</span><a class="source-link" href="https://www.cdc.gov/hiv/testing/" target="_blank" rel="noopener noreferrer">CDC: HIV testing ↗</a><a class="source-link" href="https://lawphil.net/statutes/repacts/ra2018/ra_11166_2018.html" target="_blank" rel="noopener noreferrer">Philippines: RA 11166 ↗</a></div>
+        </article>
+        <article class="detail" id="prevention">
+          <div class="detail-title"><span class="mini" aria-hidden="true">🛡️</span><h3>03. Prevention</h3></div>
+          <p class="intro">HIV prevention works best when people can choose options that fit their lives, with information free from shame or judgment. Multiple evidence-based approaches can reduce transmission.</p>
+          <div class="detail-grid"><div class="info-box"><h4>Prevention options</h4><ul><li>Use condoms correctly during sex.</li><li>Get tested regularly as appropriate and discuss STI screening.</li><li>Ask a healthcare provider about PrEP if you may be exposed to HIV.</li><li>Use sterile injecting equipment; do not share needles or syringes.</li></ul></div><div class="info-box warm"><h4>Treatment is also prevention</h4><p>When a person living with HIV takes effective treatment and maintains an undetectable viral load, HIV is not sexually transmitted to partners (U=U). Condoms can still help protect against other sexually transmitted infections.</p></div></div>
+          <p class="small-note"><strong>Remember:</strong> Prevention is about informed choices and access to care—not judging someone's identity or relationships.</p>
+          <div class="source-row"><span class="source-label">LEARN MORE</span><a class="source-link" href="https://www.cdc.gov/hiv/prevention/" target="_blank" rel="noopener noreferrer">CDC: Preventing HIV ↗</a><a class="source-link" href="https://www.who.int/news-room/fact-sheets/detail/hiv-aids" target="_blank" rel="noopener noreferrer">WHO: Prevention &amp; treatment ↗</a></div>
+        </article>
+        <article class="detail" id="prep-pep">
+          <div class="detail-title"><span class="mini" aria-hidden="true">💊</span><h3>04. PrEP and PEP</h3></div>
+          <p class="intro"><strong>PrEP</strong> and <strong>PEP</strong> are different HIV-prevention medicines. Both involve advice from healthcare professionals, but the timing is very different.</p>
+          <div class="detail-grid"><div class="info-box blue"><h4>PrEP — Before possible exposure</h4><ul><li>Pre-exposure prophylaxis is for people without HIV who may be exposed to HIV.</li><li>Depending on what is locally available and clinically appropriate, PrEP may be offered as pills or injections.</li><li>PrEP works when taken as prescribed; it does not prevent other STIs.</li></ul></div><div class="info-box warm"><h4>PEP — After a possible exposure</h4><ul><li>Post-exposure prophylaxis is emergency prevention medicine.</li><li>It should start as soon as possible, <strong>no later than 72 hours</strong> after potential exposure.</li><li>When prescribed, the usual course lasts <strong>28 days</strong>.</li></ul></div></div>
+          <p class="small-note"><strong>Time matters:</strong> If you think you were exposed to HIV, seek urgent medical care now to determine whether PEP is appropriate. Do not wait for symptoms.</p>
+          <div class="source-row"><span class="source-label">LEARN MORE</span><a class="source-link" href="https://www.cdc.gov/hiv/prevention/prep.html" target="_blank" rel="noopener noreferrer">CDC: PrEP ↗</a><a class="source-link" href="https://www.cdc.gov/stophivtogether/hiv-prevention/pep.html" target="_blank" rel="noopener noreferrer">CDC: PEP ↗</a></div>
+        </article>
+        <article class="detail" id="treatment">
+          <div class="detail-title"><span class="mini" aria-hidden="true">💚</span><h3>05. Treatment and U=U</h3></div>
+          <p class="intro">Antiretroviral therapy (ART) helps control HIV by reducing the amount of virus in the body. With regular treatment and medical follow-up, many people living with HIV can stay healthy and enjoy long, fulfilling lives.</p>
+          <div class="detail-grid"><div class="info-box"><h4>What does U=U mean?</h4><p><strong>Undetectable = Untransmittable.</strong> A person living with HIV who takes treatment and achieves and maintains an undetectable viral load does <strong>not transmit HIV through sex</strong>. Viral load testing helps confirm and monitor suppression.</p></div><div class="info-box blue"><h4>Why follow-up matters</h4><ul><li>Take prescribed ART consistently.</li><li>Attend follow-up care and viral load monitoring.</li><li>Discuss side effects and treatment concerns with a healthcare professional.</li></ul></div></div>
+          <p class="small-note"><strong>Important distinction:</strong> U=U refers to sexual transmission. It does not mean HIV has been cured or that other routes of transmission require no precautions.</p>
+          <div class="source-row"><span class="source-label">LEARN MORE</span><a class="source-link" href="https://www.who.int/news-room/questions-and-answers/item/hiv-aids" target="_blank" rel="noopener noreferrer">WHO: Treatment &amp; U=U ↗</a><a class="source-link" href="https://www.hiv.gov/hiv-basics/overview/about-hiv-and-aids/how-is-hiv-transmitted" target="_blank" rel="noopener noreferrer">HIV.gov: U=U ↗</a></div>
+        </article>
+        <article class="detail" id="respect">
+          <div class="detail-title"><span class="mini" aria-hidden="true">🤝</span><h3>06. Respect and support</h3></div>
+          <p class="intro">An HIV diagnosis does not define a person's identity, relationships, abilities, or worth. Stigma can discourage people from seeking testing and care. Respectful language, privacy, informed consent, and compassionate services matter.</p>
+          <div class="detail-grid"><div class="info-box warm"><h4>What respect looks like</h4><ul><li>Say “person living with HIV,” not a label that reduces someone to their diagnosis.</li><li>Never disclose another person's HIV status without appropriate consent or legal authority.</li><li>Make room for questions without blame, assumptions, or fear.</li></ul></div><div class="info-box"><h4>Know your rights in the Philippines</h4><p>Republic Act No. 11166, the Philippine HIV and AIDS Policy Act, provides important protections regarding confidentiality, voluntary testing, and discrimination. For advice about a specific situation, seek guidance from a qualified professional or appropriate organization.</p></div></div>
+          <p class="small-note"><strong>A reminder:</strong> You deserve accurate information, support, privacy, and healthcare delivered with dignity.</p>
+          <div class="source-row"><span class="source-label">LEARN MORE</span><a class="source-link" href="https://lawphil.net/statutes/repacts/ra2018/ra_11166_2018.html" target="_blank" rel="noopener noreferrer">RA 11166: Full law ↗</a><a class="source-link" href="https://www.who.int/publications/b/74764" target="_blank" rel="noopener noreferrer">WHO: Stigma-free care ↗</a></div>
+        </article>
+      </section>
+      <section class="rights-banner" aria-label="Supportive message"><span class="hand" aria-hidden="true">🤍</span><div><h3>You belong here.</h3><p>Your health status does not determine your worth. Learning about HIV is one step toward a kinder, more informed community.</p><a href="https://lawphil.net/statutes/repacts/ra2018/ra_11166_2018.html" target="_blank" rel="noopener noreferrer">Learn about your rights under RA 11166 ↗</a></div></section>
+      <footer class="footer"><div><strong>ARCHIVE Education</strong><p>General educational content, not personalized medical advice. Consult a qualified healthcare professional for testing, prevention, treatment, or urgent exposure concerns.</p></div><div><strong>Privacy note</strong><p>This standalone page does not request HIV status, store your searches, or use analytics trackers. External resources open on their respective websites.</p></div></footer>
+    </main>
+  </div>
+</div>
+<script>
+(() => {
+  const search = document.getElementById('search');
+  const cards = [...document.querySelectorAll('.topic-card')];
+  const count = document.getElementById('result-count');
+  const empty = document.getElementById('no-results');
+  const clear = document.getElementById('clear-search');
+  function update() {
+    const term = search.value.trim().toLocaleLowerCase();
+    let shown = 0;
+    for (const card of cards) {
+      const match = !term || card.dataset.search.includes(term) || card.textContent.toLocaleLowerCase().includes(term);
+      card.hidden = !match;
+      card.style.display = match ? '' : 'none';
+      if (match) shown++;
+    }
+    count.textContent = `${shown} ${shown === 1 ? 'topic' : 'topics'}`;
+    empty.style.display = shown ? 'none' : 'block';
+  }
+  search.addEventListener('input', update);
+  clear.addEventListener('click', () => { search.value = ''; update(); search.focus(); });
+})();
+</script>
+</body>
+</html>

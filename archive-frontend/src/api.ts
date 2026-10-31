@@ -51,6 +51,7 @@ export type HistoricalRow = { PERIOD: string; PSGC: string; LOCATION: string; PR
 export type SampleTrendRow = { YEAR: string; CATEGORY: string; CASES: number; SOURCE: string }
 export type PreRegistration = { municipality: string; preferred_channel: 'email' | 'sms'; contact_value: string; email: string; phone: string; consent: boolean; facility_code: string }
 export type PendingRequest = { reference_code: string; municipality: string; preferred_channel: 'email' | 'sms'; contact_value?: string; email?: string; phone?: string; status: string; created_at: string }
+export type Intervention = { id: string; start: string; end: string; title: string; description: string; target: string; status: string; province: string; municipality?: string; organization?: string }
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const token = sessionStorage.getItem('archive-auth-token')
@@ -78,6 +79,7 @@ export const api = {
   snapshot: (period: string) =>
     get<SnapshotRow[]>(`/api/snapshot?period=${encodeURIComponent(period)}`),
   testingCenters: () => get<TestingCenter[]>('/api/testing-centers'),
+  interventions: () => get<Intervention[]>('/api/public/interventions'),
   geometry: () => get<MunicipalityGeometry>('/api/geometry/municipalities'),
   ranking: (period: string, metric: string) => get<RankingRow[]>(`/api/ranking?period=${encodeURIComponent(period)}&metric=${encodeURIComponent(metric)}&limit=49`),
   timeline: (psgc: string) => get<SnapshotRow[]>(`/api/timeline?psgc=${encodeURIComponent(psgc)}`),
