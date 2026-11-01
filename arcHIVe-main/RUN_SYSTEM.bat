@@ -1,18 +1,15 @@
 @echo off
 setlocal EnableExtensions
 cd /d "%~dp0"
-set "ENV_DIR=%LOCALAPPDATA%\arcHIVe\py314"
+set "ENV_DIR=%~dp0..\.venv-1"
 set "PYTHON_EXE=%ENV_DIR%\Scripts\python.exe"
 set "TEMP=%LOCALAPPDATA%\arcHIVe\tmp"
 set "TMP=%TEMP%"
 set "PYTHONUTF8=1"
 if not exist "%TEMP%" mkdir "%TEMP%"
 if not exist "%PYTHON_EXE%" (
-    py -3.14 -c "import sys,struct; assert sys.version_info[:2]==(3,14); assert sys.version_info[:3]>=(3,14,5); assert struct.calcsize('P')*8==64" >nul 2>&1
-    if errorlevel 1 goto :failed
-    if not exist "%LOCALAPPDATA%\arcHIVe" mkdir "%LOCALAPPDATA%\arcHIVe"
-    py -3.14 -m venv "%ENV_DIR%"
-    if errorlevel 1 goto :failed
+    echo ERROR: Missing .venv-1. Run SETUP_LOCAL.bat from repository root first.
+    goto :failed
 )
 "%PYTHON_EXE%" -m pip install --disable-pip-version-check --no-cache-dir --upgrade pip setuptools wheel
 if errorlevel 1 goto :failed
@@ -29,5 +26,7 @@ if defined RUN_DIR (
 )
 exit /b 0
 :failed
+echo.
+echo RUN_SYSTEM failed. Read error above.
 pause
 exit /b 1
