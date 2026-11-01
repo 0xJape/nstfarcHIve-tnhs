@@ -28,7 +28,7 @@ for /f "tokens=5" %%P in ('netstat -ano ^| findstr ":5173 .*LISTENING"') do task
 for /f "tokens=5" %%P in ('netstat -ano ^| findstr ":8765 .*LISTENING"') do taskkill /PID %%P /F >nul 2>&1
 
 echo Starting backend API...
-start "ARCHIVE API" /D "%BACKEND%" cmd /k ""%PYTHON%" -m src.phase2_runtime_api --host 127.0.0.1 --port 8765 --cors-origin http://127.0.0.1:5173"
+start "ARCHIVE API" /D "%BACKEND%" "%ComSpec%" /D /K ""%PYTHON%" -m src.phase2_runtime_api --host 127.0.0.1 --port 8765 --cors-origin http://127.0.0.1:5173"
 
 echo Waiting for backend health endpoint...
 for /l %%N in (1,1,20) do (
@@ -43,7 +43,7 @@ exit /b 1
 :backend_ready
 echo Backend ready: http://127.0.0.1:8765/api/health
 echo Starting frontend...
-start "ARCHIVE Frontend" /D "%FRONTEND%" cmd /k "npm run dev -- --host 127.0.0.1 --port 5173"
+start "ARCHIVE Frontend" /D "%FRONTEND%" "%ComSpec%" /D /K "npm run dev -- --host 127.0.0.1 --port 5173"
 
 timeout /t 2 /nobreak >nul
 start "" http://127.0.0.1:5173
