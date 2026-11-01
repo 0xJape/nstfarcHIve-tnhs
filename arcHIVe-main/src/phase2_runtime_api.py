@@ -568,7 +568,15 @@ def main() -> int:
     validate_production_env()
     run_dir = resolve_run(args.run_dir)
     init_auth_db()
-    initialize_operational_db()
+    try:
+        initialize_operational_db()
+    except Exception as error:
+        print(
+            f"WARNING: Operational PostgreSQL unavailable; public analytics remain available. "
+            f"{type(error).__name__}: {error}",
+            file=sys.stderr,
+            flush=True,
+        )
     Handler.run_dir = run_dir
     Handler.database_path = run_dir / "database" / "archive_phase2.sqlite"
     Handler.cors_origin = args.cors_origin
