@@ -353,7 +353,8 @@ class Handler(BaseHTTPRequestHandler):
             if path == "/api/health":
                 analytics_ready = self.database_path.is_file()
                 postgres_ready = operational_db_ready()
-                ready = analytics_ready and postgres_ready
+                # Public analytics use bundled SQLite; PostgreSQL only powers admin workflows.
+                ready = analytics_ready
                 self.send_json({
                     "status": "ok" if ready else "unavailable",
                     "api_version": API_VERSION,
