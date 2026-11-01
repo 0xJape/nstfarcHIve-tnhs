@@ -75,6 +75,19 @@ if not exist "arcHIVe-main\.env" (
   echo Existing arcHIVe-main\.env preserved.
 )
 
+findstr /R /B "ARCHIVE_ADMIN_USERNAME=.[^ ]*" "arcHIVe-main\.env" >nul 2>&1
+if errorlevel 1 (
+  echo ERROR: arcHIVe-main\.env has no ARCHIVE_ADMIN_USERNAME.
+  echo Add local admin username and password to that file, then run START_ALL.bat.
+  goto :fail
+)
+findstr /R /B "ARCHIVE_ADMIN_PASSWORD=.[^ ]*" "arcHIVe-main\.env" >nul 2>&1
+if errorlevel 1 (
+  echo ERROR: arcHIVe-main\.env has no ARCHIVE_ADMIN_PASSWORD.
+  echo Add local admin username and password to that file, then run START_ALL.bat.
+  goto :fail
+)
+
 echo.
 echo ========================================
 echo SETUP COMPLETE

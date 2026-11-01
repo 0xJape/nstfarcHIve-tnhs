@@ -35,7 +35,10 @@ for /l %%N in (1,1,20) do (
 	curl.exe -fsS http://127.0.0.1:8765/api/health >nul 2>&1 && goto backend_ready
 	timeout /t 1 /nobreak >nul
 )
-echo WARNING: Backend did not become ready. Check ARCHIVE API window.
+echo ERROR: Backend did not become ready. Check ARCHIVE API window.
+echo Frontend will not start until backend is fixed.
+pause
+exit /b 1
 
 :backend_ready
 echo Backend ready: http://127.0.0.1:8765/api/health
