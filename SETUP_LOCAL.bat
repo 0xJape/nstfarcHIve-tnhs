@@ -12,14 +12,14 @@ echo.
 where py >nul 2>&1
 if errorlevel 1 (
   echo ERROR: Python launcher ^(py^) not found.
-  echo Install Python 3.12 x64, then run this file again.
+  echo Install Python 3.12 x64 from https://www.python.org/downloads/windows/
   goto :fail
 )
 
 where npm >nul 2>&1
 if errorlevel 1 (
   echo ERROR: npm not found.
-  echo Install Node.js LTS, then run this file again.
+  echo Install Node.js LTS from https://nodejs.org/en/download
   goto :fail
 )
 
@@ -27,7 +27,8 @@ echo [1/5] Creating Python virtual environment...
 if not exist ".venv-1\Scripts\python.exe" (
   py -3.12 -m venv ".venv-1"
   if errorlevel 1 (
-    echo ERROR: Could not create Python 3.12 environment.
+    echo ERROR: Python 3.12 is not installed or unavailable.
+    echo Install Python 3.12 x64, enable Python Launcher, then retry.
     goto :fail
   )
 ) else (
@@ -36,6 +37,11 @@ if not exist ".venv-1\Scripts\python.exe" (
 
 set "PYTHON=.venv-1\Scripts\python.exe"
 set "PIP=.venv-1\Scripts\python.exe -m pip"
+
+if not exist "%PYTHON%" (
+  echo ERROR: Virtual environment was not created: "%PYTHON%"
+  goto :fail
+)
 
 echo [2/5] Updating pip tooling...
 %PIP% install --upgrade pip setuptools wheel
@@ -50,7 +56,10 @@ echo Backend dependencies installed.
 echo [4/5] Installing all frontend dependencies...
 cd /d "%~dp0archive-frontend"
 call npm install
-if errorlevel 1 goto :fail
+if errorlevel 1 (
+  echo ERROR: Frontend dependency installation failed.
+  goto :fail
+)
 cd /d "%~dp0"
 
 echo [5/5] Checking local environment files...
