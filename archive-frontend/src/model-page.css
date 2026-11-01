@@ -10,3 +10,10 @@
 @media(max-width:760px){.app-shell main .model-page{min-height:calc(100svh - 68px);padding:2.5rem 1.1rem}.model-hero{min-height:auto;grid-template-columns:1fr}.model-page h1{font-size:clamp(3.2rem,17vw,5.5rem)}.model-orbit{margin:1rem auto}.model-stats{grid-template-columns:repeat(2,1fr);margin-top:3rem}.model-stats span:nth-child(3){border-left:0;border-top:1px solid #ffffff18}.model-stats span:nth-child(4){border-top:1px solid #ffffff18}.data-columns,.outputs-section{grid-template-columns:1fr}.timeline{grid-template-columns:1fr}.timeline>svg{margin:auto;transform:rotate(90deg)}}
 @media(max-width:480px){.model-grid,.model-stats{grid-template-columns:1fr}.model-grid article+article{border-left:0;border-top:1px solid #ffffff18}.model-stats span+span{border-left:0;border-top:1px solid #ffffff18}.model-orbit span:nth-of-type(2){right:0}.model-section h2{font-size:2.3rem}}
 @media(prefers-reduced-motion:reduce){.model-orbit,.model-orbit:before,.model-orbit:after{animation:none}.model-grid article{transition:none}}
+
+/* Readable contrast on dark model panels. */
+.model-page .lead,.model-page .section-intro{color:#e4dfe0}
+.model-page .model-stats span{color:#d5cdce}
+.model-page .boundary-card p,.model-page .model-grid p,.model-page .timeline span{color:#d0c7c8}
+.model-page .eyebrow,.model-page h1 em,.model-page .model-stats strong,.model-page .data-row span,.model-page .output-list span{color:#ff9da1}
+.model-page .equation{color:#ffc4c7}
